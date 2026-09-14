@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <!-- Gradiente Energizado da Faceta de Luz -->
+    <linearGradient id="activeFacetLight" x1="2" y1="2" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#67e8f9"/>
+      <stop offset="60%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+
+    <!-- Gradiente Energizado da Faceta de Sombra Cósmica -->
+    <linearGradient id="activeFacetDark" x1="2" y1="2" x2="12" y2="20" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#c084fc"/>
+      <stop offset="65%" stop-color="#7e22ce"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Haste Curta Iluminada -->
+    <linearGradient id="activeWoodShaft" x1="16" y1="16" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="50%" stop-color="#92400e"/>
+      <stop offset="100%" stop-color="#451a03"/>
+    </linearGradient>
+
+    <!-- Super Glow Ativo (Hover/Click) -->
+    <filter id="spearActiveGlow" x="-30%" y="-30%" width="170%" height="170%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#22d3ee" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1" flood-color="#fef08a" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#spearActiveGlow)">
+    <!-- Aura Rúnica de Alvo na Ponta -->
+    <circle cx="2" cy="2" r="4.5" stroke="#22d3ee" stroke-width="0.9" stroke-dasharray="2 2" opacity="0.95"/>
+
+    <!-- 1. Pedaço Curto do Cabo Robusto -->
+    <line x1="16" y1="16" x2="27" y2="27" stroke="url(#activeWoodShaft)" stroke-width="4.8" stroke-linecap="round"/>
+    <line x1="17" y1="17" x2="28" y2="28" stroke="#1c0902" stroke-width="1.2" stroke-linecap="round"/>
+
+    <!-- 2. Amarrações Brilhantes em Dourado Cósmico -->
+    <path d="M14 19 L 19 14 M 16 21 L 21 16 M 18 23 L 23 18" stroke="#fef08a" stroke-width="2" stroke-linecap="round"/>
+    <path d="M15 15 L 21 21 M 14 18 L 19 23" stroke="#f59e0b" stroke-width="1.4" stroke-linecap="round"/>
+
+    <!-- 3. PONTA DA LANÇA GRANDE & ENERGIZADA -->
+    <!-- Faceta Inferior / Violeta Cósmico -->
+    <path d="M2 2 L 6 15 L 9 21 L 13 18 L 16 16 Z" fill="url(#activeFacetDark)" stroke="#c084fc" stroke-width="0.9" stroke-linejoin="round"/>
+
+    <!-- Faceta Superior / Ciano Neon -->
+    <path d="M2 2 L 15 6 L 21 9 L 18 13 L 16 16 Z" fill="url(#activeFacetLight)" stroke="#ffffff" stroke-width="0.9" stroke-linejoin="round"/>
+
+    <!-- Aresta Central Flamejante -->
+    <line x1="2" y1="2" x2="16" y2="16" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+
+    <!-- Runas Ancestrais Brilhando em Branco Puro -->
+    <path d="M5 8 L 8 5 M 8 11 L 11 8 M 6 12 L 12 6" stroke="#ffffff" stroke-width="1.1" stroke-linecap="round"/>
+
+    <!-- Faíscas de Energia Cósmica -->
+    <circle cx="8" cy="1" r="0.8" fill="#22d3ee"/>
+    <circle cx="1" cy="8" r="0.8" fill="#fef08a"/>
+    <circle cx="2" cy="2" r="1.6" fill="#ffffff"/>
+  </g>
+</svg>

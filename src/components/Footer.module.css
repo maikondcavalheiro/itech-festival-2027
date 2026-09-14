@@ -1,0 +1,573 @@
+/* ==========================================================================
+   iTech Festival 2027 - Modern & Mystical Footer
+   ========================================================================== */
+
+.footerWrapper {
+  position: relative;
+  width: 100%;
+  background: #05070c;
+  color: #e2e8f0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  z-index: 40;
+}
+
+/* Ambient glows on top and corners of footer */
+.ambientGlowTop {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  max-width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(34, 211, 238, 0.6) 25%,
+    rgba(192, 132, 252, 0.8) 50%,
+    rgba(251, 191, 36, 0.6) 75%,
+    transparent 100%
+  );
+  filter: drop-shadow(0 0 12px rgba(192, 132, 252, 0.8));
+  pointer-events: none;
+}
+
+.ambientBlobLeft {
+  position: absolute;
+  top: 10%;
+  left: -100px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.07) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambientBlobRight {
+  position: absolute;
+  bottom: 5%;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem 2rem 1.5rem;
+}
+
+/* Top Bar: Highlight Banner before the grid */
+.highlightBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.8) 0%,
+    rgba(30, 41, 59, 0.4) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 4rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.highlightInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.highlightBadge {
+  font-family: var(--font-ancestrais), var(--font-cinzel), serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  background-color: #fbbf24;
+  border-radius: 50%;
+  animation: pulseDotAnim 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseDotAnim {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 1;
+    box-shadow: 0 0 10px #fbbf24;
+  }
+}
+
+.highlightTitle {
+  font-family: var(--font-ancestrais), var(--font-cinzel), serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #f8fafc;
+}
+
+.highlightSub {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin-left: 0.25rem;
+}
+
+.ctaTicketButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-ancestrais), var(--font-cinzel), serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #05070c;
+  background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 50%, #c084fc 100%);
+  padding: 0.75rem 1.6rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 20px rgba(34, 211, 238, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ctaTicketButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(192, 132, 252, 0.45);
+  filter: brightness(1.08);
+}
+
+/* ==================== 4-COLUMN MAIN GRID ==================== */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+/* Column 1: Brand & Identity */
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.brandLogoLink {
+  display: inline-block;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  width: fit-content;
+}
+
+.brandLogoLink:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.footerLogo {
+  width: auto;
+  height: 65px;
+  object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 0 16px rgba(34, 211, 238, 0.45));
+}
+
+.brandManifesto {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  max-width: 360px;
+}
+
+.festivalMetaList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.metaIcon {
+  font-size: 0.95rem;
+  color: #22d3ee;
+  flex-shrink: 0;
+}
+
+/* Titles of Columns */
+.colTitle {
+  font-family: var(--font-ancestrais), var(--font-cinzel), serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f1f5f9;
+  margin-bottom: 1.4rem;
+  position: relative;
+  display: inline-block;
+}
+
+.colTitle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, #c084fc, transparent);
+  border-radius: 2px;
+}
+
+/* Links List */
+.linkList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footerLink {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+}
+
+.footerLink:hover {
+  color: #22d3ee;
+  transform: translateX(4px);
+}
+
+.tagNew {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c084fc;
+  background: rgba(192, 132, 252, 0.15);
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  margin-left: 0.4rem;
+}
+
+/* Column 4: Newsletter & Social */
+.newsletterCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.newsletterText {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.newsletterForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.25rem 0.35rem 0.25rem 1rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.inputGroup:focus-within {
+  border-color: #22d3ee;
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.2);
+}
+
+.newsletterInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+.newsletterInput::placeholder {
+  color: #64748b;
+}
+
+.newsletterBtn {
+  background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.newsletterBtn:hover {
+  filter: brightness(1.15);
+  transform: scale(1.02);
+}
+
+.successMessage {
+  font-size: 0.8rem;
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Social Buttons */
+.socialSection {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.socialLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.socialIconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.socialIconBtn:hover {
+  color: #22d3ee;
+  border-color: rgba(34, 211, 238, 0.4);
+  background: rgba(34, 211, 238, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(34, 211, 238, 0.2);
+}
+
+/* ==================== BOTTOM BAR ==================== */
+.bottomDivider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  margin-bottom: 2rem;
+}
+
+.bottomBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.legalNotice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.copyrightText {
+  color: #94a3b8;
+}
+
+.creatorCredit {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.creatorCredit strong {
+  color: #22d3ee;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: all 0.25s ease;
+}
+
+.creatorCredit:hover strong {
+  color: #c084fc;
+  text-shadow: 0 0 12px rgba(192, 132, 252, 0.6);
+}
+
+.manifestoMini {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.bottomLinks {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.bottomLegalLink {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.bottomLegalLink:hover {
+  color: #22d3ee;
+}
+
+/* Back to top button */
+.backToTopBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ancestrais), var(--font-cinzel), serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.backToTopBtn:hover {
+  color: #ffffff;
+  border-color: #c084fc;
+  background: rgba(192, 132, 252, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(192, 132, 252, 0.25);
+}
+
+.backToTopArrow {
+  font-size: 0.9rem;
+  transition: transform 0.25s ease;
+}
+
+.backToTopBtn:hover .backToTopArrow {
+  transform: translateY(-2px);
+}
+
+/* ==================== RESPONSIVENESS ==================== */
+@media (max-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .container {
+    padding: 3.5rem 1.25rem 2rem 1.25rem;
+  }
+
+  .highlightBanner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.4rem;
+  }
+
+  .ctaTicketButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mainGrid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .bottomBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .bottomLinks {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .backToTopBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

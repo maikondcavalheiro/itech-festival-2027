@@ -1,0 +1,49 @@
+.auraContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.auraOrb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.75) 0%,
+    rgba(192, 132, 252, 0.4) 50%,
+    transparent 80%
+  );
+  filter: blur(5px);
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, background 0.3s ease, filter 0.25s ease, opacity 0.2s ease;
+  will-change: transform;
+}
+
+.auraHover {
+  width: 38px;
+  height: 38px;
+  background: radial-gradient(
+    circle,
+    rgba(251, 191, 36, 0.8) 0%,
+    rgba(217, 70, 239, 0.6) 45%,
+    transparent 75%
+  );
+  filter: blur(7px);
+}
+
+@media (hover: none) or (pointer: coarse) {
+  .auraContainer {
+    display: none !important;
+  }
+}
