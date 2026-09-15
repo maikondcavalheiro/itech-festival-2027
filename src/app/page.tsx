@@ -188,8 +188,9 @@ export default function Home() {
             muted
             playsInline
             controls={false}
+            preload="auto"
           >
-            <source src="/fundo%20itech%202027%20ancestrais%202.mp4" type="video/mp4" />
+            <source src="/Fundo-mobile.mp4" type="video/mp4" />
           </video>
 
           {/* Mask on Mobile */}

@@ -562,6 +562,10 @@
     height: 100vh;
   }
 
+  .mobileStage .heroVideo {
+    object-position: center center;
+  }
+
   .maskWrapper {
     width: 50%;
     max-width: 250px;
