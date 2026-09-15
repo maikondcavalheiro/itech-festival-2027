@@ -15,6 +15,55 @@ export default function Home() {
   const hasTriggeredScrollToSection = useRef(false);
   const touchStartY = useRef<number | null>(null);
 
+  const desktopHeroVideoRef = useRef<HTMLVideoElement | null>(null);
+  const mobileHeroVideoRef = useRef<HTMLVideoElement | null>(null);
+  const secondSectionVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  const forcePlayVideos = useCallback(() => {
+    const videos = [
+      desktopHeroVideoRef.current,
+      mobileHeroVideoRef.current,
+      secondSectionVideoRef.current,
+    ];
+    videos.forEach((video) => {
+      if (video) {
+        video.setAttribute("playsinline", "true");
+        video.setAttribute("webkit-playsinline", "true");
+        video.defaultMuted = true;
+        video.muted = true;
+        if (video.paused) {
+          const promise = video.play();
+          if (promise !== undefined) {
+            promise.catch(() => {});
+          }
+        }
+      }
+    });
+  }, []);
+
+  // Forçar autoplay no carregamento e em qualquer toque/interação (essencial para Safari no iOS)
+  useEffect(() => {
+    forcePlayVideos();
+
+    const handleInteraction = () => {
+      forcePlayVideos();
+    };
+
+    window.addEventListener("touchstart", handleInteraction, { passive: true });
+    window.addEventListener("touchmove", handleInteraction, { passive: true });
+    window.addEventListener("pointerdown", handleInteraction, { passive: true });
+    window.addEventListener("click", handleInteraction, { passive: true });
+    window.addEventListener("scroll", handleInteraction, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", handleInteraction);
+      window.removeEventListener("touchmove", handleInteraction);
+      window.removeEventListener("pointerdown", handleInteraction);
+      window.removeEventListener("click", handleInteraction);
+      window.removeEventListener("scroll", handleInteraction);
+    };
+  }, [forcePlayVideos]);
+
   // 1. Initial delay for the mask to emerge
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -86,7 +135,8 @@ export default function Home() {
   // 4. Touch events for mobile support
   const handleTouchStart = useCallback((e: TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
-  }, []);
+    forcePlayVideos();
+  }, [forcePlayVideos]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
     if (touchStartY.current === null) return;
@@ -139,16 +189,46 @@ export default function Home() {
   return (
     <main className={styles.main}>
       {/* 1ª SEÇÃO: Hero Pinned com Vídeo dos Ancestrais e Efeito Especial de Portal */}
-      <section className={styles.heroContainer} aria-label="Hero Section">
+      <section
+        className={styles.heroContainer}
+        aria-label="Hero Section"
+        onClick={forcePlayVideos}
+        onTouchStart={forcePlayVideos}
+      >
         {/* Desktop Stage (16:9) */}
         <div className={`${styles.videoStage} ${styles.desktopStage}`}>
           <video
+            ref={(el) => {
+              desktopHeroVideoRef.current = el;
+              if (el) {
+                el.setAttribute("playsinline", "true");
+                el.setAttribute("webkit-playsinline", "true");
+                el.defaultMuted = true;
+                el.muted = true;
+                el.play().catch(() => {});
+              }
+            }}
             className={styles.heroVideo}
             autoPlay
             loop
             muted
             playsInline
             controls={false}
+            preload="auto"
+            disablePictureInPicture
+            disableRemotePlayback
+            onLoadedMetadata={(e) => {
+              const v = e.currentTarget;
+              v.defaultMuted = true;
+              v.muted = true;
+              v.play().catch(() => {});
+            }}
+            onCanPlay={(e) => {
+              const v = e.currentTarget;
+              v.defaultMuted = true;
+              v.muted = true;
+              v.play().catch(() => {});
+            }}
           >
             <source src="/fundo%20itech%202027%20ancestrais%202.mp4" type="video/mp4" />
           </video>
@@ -182,6 +262,16 @@ export default function Home() {
         {/* Mobile Stage (9:16) */}
         <div className={`${styles.videoStage} ${styles.mobileStage}`}>
           <video
+            ref={(el) => {
+              mobileHeroVideoRef.current = el;
+              if (el) {
+                el.setAttribute("playsinline", "true");
+                el.setAttribute("webkit-playsinline", "true");
+                el.defaultMuted = true;
+                el.muted = true;
+                el.play().catch(() => {});
+              }
+            }}
             className={styles.heroVideo}
             autoPlay
             loop
@@ -189,6 +279,20 @@ export default function Home() {
             playsInline
             controls={false}
             preload="auto"
+            disablePictureInPicture
+            disableRemotePlayback
+            onLoadedMetadata={(e) => {
+              const v = e.currentTarget;
+              v.defaultMuted = true;
+              v.muted = true;
+              v.play().catch(() => {});
+            }}
+            onCanPlay={(e) => {
+              const v = e.currentTarget;
+              v.defaultMuted = true;
+              v.muted = true;
+              v.play().catch(() => {});
+            }}
           >
             <source src="/Fundo-mobile.mp4" type="video/mp4" />
           </video>
@@ -271,12 +375,37 @@ export default function Home() {
       >
         {/* Vídeo de Plano de Fundo da 2ª Seção em Loop Contínuo e Silenciado */}
         <video
+          ref={(el) => {
+            secondSectionVideoRef.current = el;
+            if (el) {
+              el.setAttribute("playsinline", "true");
+              el.setAttribute("webkit-playsinline", "true");
+              el.defaultMuted = true;
+              el.muted = true;
+              el.play().catch(() => {});
+            }
+          }}
           className={styles.secondSectionVideo}
           autoPlay
           loop
           muted
           playsInline
           controls={false}
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
+          onLoadedMetadata={(e) => {
+            const v = e.currentTarget;
+            v.defaultMuted = true;
+            v.muted = true;
+            v.play().catch(() => {});
+          }}
+          onCanPlay={(e) => {
+            const v = e.currentTarget;
+            v.defaultMuted = true;
+            v.muted = true;
+            v.play().catch(() => {});
+          }}
         >
           <source src="/Fundo%202%20itech%20festival.mp4" type="video/mp4" />
         </video>

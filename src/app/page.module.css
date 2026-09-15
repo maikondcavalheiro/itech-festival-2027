@@ -55,6 +55,18 @@
   pointer-events: none;
 }
 
+.heroVideo::-webkit-media-controls,
+.heroVideo::-webkit-media-controls-start-playback-button,
+.heroVideo::-webkit-media-controls-play-button,
+.heroVideo::-webkit-media-controls-panel {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 /* ==================== MASK SECTION 1 (REDUCED SIZE, HIGHER UP) ==================== */
 .maskWrapper {
   position: absolute;
@@ -312,6 +324,18 @@
   object-position: center center;
   z-index: 0;
   pointer-events: none;
+}
+
+.secondSectionVideo::-webkit-media-controls,
+.secondSectionVideo::-webkit-media-controls-start-playback-button,
+.secondSectionVideo::-webkit-media-controls-play-button,
+.secondSectionVideo::-webkit-media-controls-panel {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Local dark aura directly behind the logo & info block for maximum readability */
