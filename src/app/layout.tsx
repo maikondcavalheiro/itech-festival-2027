@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Metamorphous, Cinzel_Decorative } from "next/font/go
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AncestralAura from "@/components/AncestralAura";
+import AncestralLockModal from "@/components/AncestralLockModal";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -46,6 +47,7 @@ export default function RootLayout({
     >
       <body>
         <AncestralAura />
+        <AncestralLockModal />
         <Navbar />
         {children}
         <Footer />

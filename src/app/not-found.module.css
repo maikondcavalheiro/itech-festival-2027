@@ -1,0 +1,229 @@
+/* ==========================================================================
+   not-found.module.css
+   Página 404 Cósmica do iTech Festival 2027
+   ========================================================================== */
+
+.notFoundWrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: #05070c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 4rem;
+  overflow: hidden;
+  color: #f8fafc;
+}
+
+/* Fundo Cósmico & Halos */
+.cosmicBackdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(17, 24, 45, 0.9) 0%,
+    rgba(5, 7, 12, 0.98) 75%
+  );
+  z-index: 0;
+}
+
+.ambientBlobCyan {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.12) 0%, transparent 70%);
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.ambientBlobViolet {
+  position: absolute;
+  bottom: 20%;
+  right: 15%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.14) 0%, transparent 70%);
+  filter: blur(110px);
+  pointer-events: none;
+}
+
+/* Card Central */
+.contentCard {
+  position: relative;
+  z-index: 10;
+  max-width: 540px;
+  width: 100%;
+  background: rgba(15, 20, 35, 0.7);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  box-shadow:
+    0 25px 60px -15px rgba(0, 0, 0, 0.9),
+    0 0 50px -10px rgba(34, 211, 238, 0.2),
+    0 0 70px -15px rgba(168, 85, 247, 0.2);
+  border-radius: 28px;
+  padding: 3rem 2.25rem 2.5rem;
+  text-align: center;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: cardFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Medallion do Rosto Ancestral */
+.medallionWrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medallionHalo {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.4) 0%,
+    rgba(168, 85, 247, 0.3) 50%,
+    transparent 72%
+  );
+  animation: pulseGlow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.7));
+  }
+}
+
+.medallionFrame {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #22d3ee, #a855f7, #fbbf24);
+  box-shadow:
+    0 0 25px rgba(34, 211, 238, 0.5),
+    0 0 40px rgba(168, 85, 247, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medallionInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #080c16;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ancestralFaceImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+  filter: contrast(1.1) brightness(1.05);
+}
+
+.badge404 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  font-family: var(--font-cinzel), serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  margin-bottom: 1.25rem;
+}
+
+.title {
+  font-family: var(--font-cinzel), serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #bae6fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.description {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #cbd5e1;
+  margin-bottom: 0.85rem;
+}
+
+.description span {
+  display: block;
+}
+
+.closing {
+  font-family: var(--font-ancestrais), serif;
+  font-size: 1.15rem;
+  color: #fbbf24;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 14px rgba(251, 191, 36, 0.45);
+}
+
+.homeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.85rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #22d3ee 0%, #0284c7 100%);
+  color: #030712;
+  font-family: var(--font-cinzel), serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 20px rgba(34, 211, 238, 0.4),
+    0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.homeButton:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:
+    0 0 30px rgba(34, 211, 238, 0.65),
+    0 8px 20px rgba(0, 0, 0, 0.4);
+}
