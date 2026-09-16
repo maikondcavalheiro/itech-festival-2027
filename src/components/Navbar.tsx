@@ -81,7 +81,17 @@ export default function Navbar() {
       }`}
     >
       {/* 1. Logo da iTech Preto */}
-      <Link href="/" className={styles.logoLink} onClick={closeMobileMenu}>
+      <Link
+        href="/"
+        className={styles.logoLink}
+        onClick={(e) => {
+          if (isHome) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+          closeMobileMenu();
+        }}
+      >
         <Image
           src="/logo-itech-preto.png"
           alt="iTech Festival"

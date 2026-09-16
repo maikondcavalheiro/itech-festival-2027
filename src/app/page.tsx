@@ -91,9 +91,23 @@ export default function Home() {
         if (secondSectionRef.current) {
           secondSectionRef.current.scrollIntoView({ behavior: "smooth" });
         }
+
+        // Timer de segurança: após a conclusão do scroll suave para a 2ª seção,
+        // garante o reset limpo da 1ª seção em segundo plano
+        setTimeout(() => {
+          if (secondSectionRef.current) {
+            const rect = secondSectionRef.current.getBoundingClientRect();
+            if (rect.top <= window.innerHeight * 0.3) {
+              targetProgressRef.current = 0;
+              currentProgressRef.current = 0;
+              setZoomProgress(0);
+              hasTriggeredScrollToSection.current = false;
+            }
+          }
+        }, 850);
       }
 
-      // If user scrolls back out
+      // If user scrolls back out while in Hero
       if (currentProgressRef.current < 0.95) {
         hasTriggeredScrollToSection.current = false;
       }
@@ -110,29 +124,49 @@ export default function Home() {
     };
   }, []);
 
-  // 3. Wheel Event: Zoom while at top of page, scroll down to section 2 only when portal activates
+  // 3. Monitor de Scroll: Quando a 2ª seção assume a tela, reseta o portal da 1ª seção
+  // Assim, se o usuário rolar para cima (ou clicar no logo), volta para o Hero limpo e navegável
+  useEffect(() => {
+    const handleScroll = () => {
+      const secondSection = secondSectionRef.current;
+      if (!secondSection) return;
+
+      const rect = secondSection.getBoundingClientRect();
+      // Quando o topo da 2ª seção alcança o topo da tela, a 1ª seção está 100% fora do campo de visão
+      if (rect.top <= 20) {
+        if (targetProgressRef.current > 0 || currentProgressRef.current > 0) {
+          targetProgressRef.current = 0;
+          currentProgressRef.current = 0;
+          setZoomProgress(0);
+          hasTriggeredScrollToSection.current = false;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // 4. Wheel Event: Zoom while at top of page, scroll down to section 2 only when portal activates
   const handleWheel = useCallback((e: WheelEvent) => {
     const isAtTop = window.scrollY <= 10;
 
-    // While at the top, capture the scroll so the page doesn't move down, only zoom
-    if (isAtTop && targetProgressRef.current < 0.99) {
-      if (e.deltaY > 0) {
-        // Scrolling down: increase zoom
+    if (isAtTop) {
+      if (e.deltaY > 0 && targetProgressRef.current < 1) {
+        // Rolando para baixo: avança o zoom em direção ao portal
         e.preventDefault();
         targetProgressRef.current = Math.min(1, targetProgressRef.current + e.deltaY * 0.0015);
       } else if (e.deltaY < 0 && targetProgressRef.current > 0) {
-        // Scrolling up: decrease zoom
+        // Rolando para cima: afasta o zoom de volta
         e.preventDefault();
         targetProgressRef.current = Math.max(0, targetProgressRef.current + e.deltaY * 0.0015);
       }
-    } else if (isAtTop && targetProgressRef.current >= 0.99 && e.deltaY < 0) {
-      // If at top and scrolling back up, zoom back out
-      e.preventDefault();
-      targetProgressRef.current = Math.max(0, targetProgressRef.current + e.deltaY * 0.0015);
     }
   }, []);
 
-  // 4. Touch events for mobile support
+  // 5. Touch events para navegação mobile fluida e bidirecional
   const handleTouchStart = useCallback((e: TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
     forcePlayVideos();
@@ -144,11 +178,13 @@ export default function Home() {
     const currentY = e.touches[0].clientY;
     const deltaY = touchStartY.current - currentY;
 
-    if (isAtTop && targetProgressRef.current < 0.99) {
-      if (deltaY > 0) {
+    if (isAtTop) {
+      if (deltaY > 0 && targetProgressRef.current < 1) {
+        // Deslizando para cima (rolando a página para baixo): avança no portal
         if (e.cancelable) e.preventDefault();
         targetProgressRef.current = Math.min(1, targetProgressRef.current + deltaY * 0.004);
       } else if (deltaY < 0 && targetProgressRef.current > 0) {
+        // Deslizando para baixo (rolando de volta ao topo): recua o portal suavemente
         if (e.cancelable) e.preventDefault();
         targetProgressRef.current = Math.max(0, targetProgressRef.current + deltaY * 0.004);
       }
