@@ -17,7 +17,7 @@ interface ProductItem {
 const STORE_ITEMS: ProductItem[] = [
   {
     id: "img-0218",
-    title: "Camiseta Oficial iTech 2026",
+    title: "Camiseta O Caminho da Vida",
     category: "Vestuário",
     badge: "Best Seller 2026",
     description:
@@ -44,7 +44,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-0328",
-    title: "Camiseta Runa Sagrada",
+    title: "Camiseta Kurenai",
     category: "Vestuário",
     badge: "Edição Especial",
     description:
@@ -53,7 +53,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-0291",
-    title: "Sacochila iTech Cyan Moss",
+    title: "Bag iTech Cyan Moss",
     category: "Acessórios",
     badge: "À Prova de Pista",
     description:
@@ -80,7 +80,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-0410",
-    title: "Ensaio Runa Sagrada",
+    title: "Ensaio Coleção 2026",
     category: "Editorial",
     badge: "Lookbook 2026",
     description:
@@ -89,7 +89,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-7941",
-    title: "Boné Trucker iTech Dark",
+    title: "Boné iTech - Trucker Dark",
     category: "Headwear",
     badge: "Trucker Oficial",
     description:
@@ -98,7 +98,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-8011",
-    title: "Sacochilas iTech",
+    title: "Conjunto Bags Coleção 2026",
     category: "Acessórios",
     badge: "Coleção Tríade",
     description:
@@ -107,7 +107,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-0229",
-    title: "Caminho dos Ancestrais",
+    title: "Excelência nos Detalhes",
     category: "Editorial",
     badge: "Ensaio Oficial",
     description:
@@ -116,7 +116,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-0274",
-    title: "Arte Cósmica",
+    title: "Caminho dos Ancestrais",
     category: "Acessórios",
     badge: "Edição Histórica",
     description:
@@ -125,7 +125,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-0439",
-    title: "Modelagem & Conforto na Dança",
+    title: "Estética Singular e Significados Marcantes",
     category: "Vestuário",
     badge: "100% Algodão",
     description:
@@ -134,7 +134,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-7962",
-    title: "Trucker iTech • Vista Solar",
+    title: "Diversos Modelos",
     category: "Headwear",
     badge: "Proteção & Estilo",
     description:
@@ -143,7 +143,7 @@ const STORE_ITEMS: ProductItem[] = [
   },
   {
     id: "img-7997",
-    title: "Gymsack Minimalist Dark",
+    title: "Qual Corresponde a Sua Essência?",
     category: "Acessórios",
     badge: "Mobilidade",
     description:
