@@ -15,7 +15,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { label: "ITECH - STORE", href: "/store" },
   { label: "TERRA DA LUA", href: "/#terra-da-lua" },
-  { label: "A ORIGEM E A FAÍSCA", href: "/#origem-faisca" },
+  { label: "A ORIGEM E A FAÍSCA", href: "/a-origem-e-a-faisca" },
   { label: "PROGRAMAÇÃO", href: "/#programacao" },
   { label: "GALERIA E CURIOSIDADES", href: "/#galeria" },
   {
@@ -118,6 +118,12 @@ export default function Navbar() {
                   {item.label}
                 </a>
               </li>
+            ) : item.href.startsWith("/") && !item.href.includes("#") ? (
+              <li key={item.label} className={styles.navItem}>
+                <Link href={item.href} className={styles.navLink}>
+                  {item.label}
+                </Link>
+              </li>
             ) : (
               <li key={item.label} className={styles.navItem}>
                 <a href={item.href} className={styles.navLink}>
@@ -162,19 +168,33 @@ export default function Navbar() {
         <ul className={styles.mobileNavList}>
           {NAV_ITEMS.map((item) => (
             <li key={item.label}>
-              <a
-                href={item.href}
-                target={item.isCta ? "_blank" : undefined}
-                rel={item.isCta ? "noopener noreferrer" : undefined}
-                className={
-                  item.isCta
-                    ? `${styles.ctaButton} ${styles.mobileCta}`
-                    : styles.mobileNavLink
-                }
-                onClick={closeMobileMenu}
-              >
-                {item.label}
-              </a>
+              {item.isCta ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.ctaButton} ${styles.mobileCta}`}
+                  onClick={closeMobileMenu}
+                >
+                  {item.label}
+                </a>
+              ) : item.href.startsWith("/") && !item.href.includes("#") ? (
+                <Link
+                  href={item.href}
+                  className={styles.mobileNavLink}
+                  onClick={closeMobileMenu}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  href={item.href}
+                  className={styles.mobileNavLink}
+                  onClick={closeMobileMenu}
+                >
+                  {item.label}
+                </a>
+              )}
             </li>
           ))}
         </ul>

@@ -113,9 +113,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/#origem-faisca" className={styles.footerLink}>
+                <Link href="/a-origem-e-a-faisca" className={styles.footerLink}>
                   A Origem e a Faísca
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="/#programacao" className={styles.footerLink}>
