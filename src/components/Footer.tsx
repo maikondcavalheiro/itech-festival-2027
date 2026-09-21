@@ -113,11 +113,6 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <Link href="/a-origem-e-a-faisca" className={styles.footerLink}>
-                  A Origem e a Faísca
-                </Link>
-              </li>
-              <li>
                 <a href="/#programacao" className={styles.footerLink}>
                   Line-up & Soundspaces
                 </a>

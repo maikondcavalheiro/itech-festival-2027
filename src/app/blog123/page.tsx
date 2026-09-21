@@ -181,7 +181,7 @@ export default function OrigemEFaiscaBlog() {
                   </div>
 
                   <Link
-                    href={`/a-origem-e-a-faisca/${featuredPost.slug}`}
+                    href={`/blog123/${featuredPost.slug}`}
                     className={styles.readButton}
                   >
                     <span>Ler Crônica</span>
@@ -252,7 +252,7 @@ export default function OrigemEFaiscaBlog() {
                       </div>
 
                       <Link
-                        href={`/a-origem-e-a-faisca/${post.slug}`}
+                        href={`/blog123/${post.slug}`}
                         className={styles.cardReadLink}
                       >
                         <span>Explorar</span>
