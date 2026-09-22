@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono, Metamorphous, Cinzel_Decorative } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -57,6 +58,21 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${fontAncestrais.variable} ${fontCinzel.variable}`}
     >
       <body>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-F1P4EXS50J"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-F1P4EXS50J');
+          `}
+        </Script>
+
         <AncestralAura />
         <AncestralLockModal />
         <Navbar />
