@@ -108,19 +108,19 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="/#terra-da-lua" className={styles.footerLink}>
+                <Link href="/#terra-da-lua" className={styles.footerLink}>
                   O Santuário (Terra da Lua)
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#programacao" className={styles.footerLink}>
+                <Link href="/#programacao" className={styles.footerLink}>
                   Line-up & Soundspaces
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#galeria" className={styles.footerLink}>
+                <Link href="/#galeria" className={styles.footerLink}>
                   Galeria & Memórias
-                </a>
+                </Link>
               </li>
               <li>
                 <a
@@ -140,29 +140,29 @@ export default function Footer() {
             <h3 className={styles.colTitle}>Guia do Viajante</h3>
             <ul className={styles.linkList}>
               <li>
-                <a href="/#como-chegar" className={styles.footerLink}>
+                <Link href="/#como-chegar" className={styles.footerLink}>
                   Como Chegar & Localização
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#camping" className={styles.footerLink}>
+                <Link href="/#camping" className={styles.footerLink}>
                   Área de Camping & Estrutura
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#faq" className={styles.footerLink}>
+                <Link href="/#faq" className={styles.footerLink}>
                   O que Levar / Permitidos
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#regras" className={styles.footerLink}>
+                <Link href="/#regras" className={styles.footerLink}>
                   Regras de Convivência & Respeito
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#transporte" className={styles.footerLink}>
+                <Link href="/#transporte" className={styles.footerLink}>
                   Excursões & Transporte Oficial
-                </a>
+                </Link>
               </li>
               <li>
                 <span className={styles.footerLink} style={{ opacity: 0.75, cursor: "default" }}>
@@ -281,17 +281,15 @@ export default function Footer() {
           </div>
 
           <div className={styles.bottomLinks}>
-            <a href="/#termos" className={styles.bottomLegalLink}>
+            <Link href="/#termos" className={styles.bottomLegalLink}>
               Termos de Uso
-            </a>
-            <span aria-hidden="true">•</span>
-            <a href="/#privacidade" className={styles.bottomLegalLink}>
+            </Link>
+            <Link href="/#privacidade" className={styles.bottomLegalLink}>
               Privacidade
-            </a>
-            <span aria-hidden="true">•</span>
-            <a href="/#regras-camping" className={styles.bottomLegalLink}>
+            </Link>
+            <Link href="/#regras-camping" className={styles.bottomLegalLink}>
               Regras do Camping
-            </a>
+            </Link>
           </div>
 
           <button
