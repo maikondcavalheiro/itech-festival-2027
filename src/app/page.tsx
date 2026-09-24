@@ -7,17 +7,58 @@ import styles from "./page.module.css";
 export default function Home() {
   const [hasEntered, setHasEntered] = useState(false);
   const [zoomProgress, setZoomProgress] = useState(0);
+  const [isDismissing, setIsDismissing] = useState(false);
+  const [heroDismissed, setHeroDismissed] = useState(false);
 
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
   const animationFrameRef = useRef<number | null>(null);
   const secondSectionRef = useRef<HTMLElement | null>(null);
   const hasTriggeredScrollToSection = useRef(false);
+  const isDismissingRef = useRef(false);
   const touchStartY = useRef<number | null>(null);
 
   const desktopHeroVideoRef = useRef<HTMLVideoElement | null>(null);
   const mobileHeroVideoRef = useRef<HTMLVideoElement | null>(null);
   const secondSectionVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Garantir que ao recarregar a página (F5) inicie limpo no topo com a Hero visível
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Bloqueia o scroll físico da página enquanto a Hero estiver ativa
+  useEffect(() => {
+    if (!heroDismissed) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [heroDismissed]);
+
+  const dismissHero = useCallback(() => {
+    if (isDismissingRef.current) return;
+    isDismissingRef.current = true;
+    setIsDismissing(true);
+
+    // Efeito de dissolução mágica: após o fade-out/scale cósmico (750ms), desmonta a Hero
+    setTimeout(() => {
+      setHeroDismissed(true);
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new Event("scroll"));
+    }, 750);
+  }, []);
 
   const forcePlayVideos = useCallback(() => {
     const videos = [
@@ -75,6 +116,8 @@ export default function Home() {
 
   // 2. Smooth Lerp Loop for Zoom & Portal Effect
   useEffect(() => {
+    if (heroDismissed) return;
+
     const updateZoom = () => {
       const diff = targetProgressRef.current - currentProgressRef.current;
       currentProgressRef.current += diff * 0.12;
@@ -85,30 +128,14 @@ export default function Home() {
 
       setZoomProgress(currentProgressRef.current);
 
-      // When zoom reaches the end (third eye portal entered), scroll to second section
+      // Quando o zoom atinge o ápice (terceiro olho acessado), o portal dissolve e materializa a 2ª seção
       if (currentProgressRef.current >= 0.98 && !hasTriggeredScrollToSection.current) {
         hasTriggeredScrollToSection.current = true;
-        if (secondSectionRef.current) {
-          secondSectionRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-
-        // Timer de segurança: após a conclusão do scroll suave para a 2ª seção,
-        // garante o reset limpo da 1ª seção em segundo plano
-        setTimeout(() => {
-          if (secondSectionRef.current) {
-            const rect = secondSectionRef.current.getBoundingClientRect();
-            if (rect.top <= window.innerHeight * 0.3) {
-              targetProgressRef.current = 0;
-              currentProgressRef.current = 0;
-              setZoomProgress(0);
-              hasTriggeredScrollToSection.current = false;
-            }
-          }
-        }, 850);
+        dismissHero();
       }
 
-      // If user scrolls back out while in Hero
-      if (currentProgressRef.current < 0.95) {
+      // Se o usuário recuar antes de entrar no portal
+      if (currentProgressRef.current < 0.95 && !isDismissingRef.current) {
         hasTriggeredScrollToSection.current = false;
       }
 
@@ -122,77 +149,49 @@ export default function Home() {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  }, [heroDismissed, dismissHero]);
 
-  // 3. Monitor de Scroll: Quando a 2ª seção assume a tela, reseta o portal da 1ª seção
-  // Assim, se o usuário rolar para cima (ou clicar no logo), volta para o Hero limpo e navegável
-  useEffect(() => {
-    const handleScroll = () => {
-      const secondSection = secondSectionRef.current;
-      if (!secondSection) return;
-
-      const rect = secondSection.getBoundingClientRect();
-      // Quando o topo da 2ª seção alcança o topo da tela, a 1ª seção está 100% fora do campo de visão
-      if (rect.top <= 20) {
-        if (targetProgressRef.current > 0 || currentProgressRef.current > 0) {
-          targetProgressRef.current = 0;
-          currentProgressRef.current = 0;
-          setZoomProgress(0);
-          hasTriggeredScrollToSection.current = false;
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // 4. Wheel Event: Zoom while at top of page, scroll down to section 2 only when portal activates
+  // 3. Wheel Event: Zoom em direção ao portal do terceiro olho
   const handleWheel = useCallback((e: WheelEvent) => {
-    const isAtTop = window.scrollY <= 10;
+    if (isDismissingRef.current) return;
 
-    if (isAtTop) {
-      if (e.deltaY > 0 && targetProgressRef.current < 1) {
-        // Rolando para baixo: avança o zoom em direção ao portal
-        e.preventDefault();
-        targetProgressRef.current = Math.min(1, targetProgressRef.current + e.deltaY * 0.0015);
-      } else if (e.deltaY < 0 && targetProgressRef.current > 0) {
-        // Rolando para cima: afasta o zoom de volta
-        e.preventDefault();
-        targetProgressRef.current = Math.max(0, targetProgressRef.current + e.deltaY * 0.0015);
-      }
+    if (e.deltaY > 0 && targetProgressRef.current < 1) {
+      // Rolando para baixo: avança o zoom em direção ao portal
+      e.preventDefault();
+      targetProgressRef.current = Math.min(1, targetProgressRef.current + Math.abs(e.deltaY) * 0.0018);
+    } else if (e.deltaY < 0 && targetProgressRef.current > 0) {
+      // Rolando para cima: afasta o zoom de volta
+      e.preventDefault();
+      targetProgressRef.current = Math.max(0, targetProgressRef.current - Math.abs(e.deltaY) * 0.0018);
     }
   }, []);
 
-  // 5. Touch events para navegação mobile fluida e bidirecional
+  // 4. Touch events para navegação mobile fluida e bidirecional
   const handleTouchStart = useCallback((e: TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
     forcePlayVideos();
   }, [forcePlayVideos]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
-    if (touchStartY.current === null) return;
-    const isAtTop = window.scrollY <= 10;
+    if (touchStartY.current === null || isDismissingRef.current) return;
     const currentY = e.touches[0].clientY;
     const deltaY = touchStartY.current - currentY;
 
-    if (isAtTop) {
-      if (deltaY > 0 && targetProgressRef.current < 1) {
-        // Deslizando para cima (rolando a página para baixo): avança no portal
-        if (e.cancelable) e.preventDefault();
-        targetProgressRef.current = Math.min(1, targetProgressRef.current + deltaY * 0.004);
-      } else if (deltaY < 0 && targetProgressRef.current > 0) {
-        // Deslizando para baixo (rolando de volta ao topo): recua o portal suavemente
-        if (e.cancelable) e.preventDefault();
-        targetProgressRef.current = Math.max(0, targetProgressRef.current + deltaY * 0.004);
-      }
+    if (deltaY > 0 && targetProgressRef.current < 1) {
+      // Deslizando para cima: avança no portal
+      if (e.cancelable) e.preventDefault();
+      targetProgressRef.current = Math.min(1, targetProgressRef.current + deltaY * 0.005);
+    } else if (deltaY < 0 && targetProgressRef.current > 0) {
+      // Deslizando para baixo: recua o portal
+      if (e.cancelable) e.preventDefault();
+      targetProgressRef.current = Math.max(0, targetProgressRef.current + deltaY * 0.005);
     }
     touchStartY.current = currentY;
   }, []);
 
   useEffect(() => {
+    if (heroDismissed) return;
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
@@ -202,7 +201,7 @@ export default function Home() {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [handleWheel, handleTouchStart, handleTouchMove]);
+  }, [heroDismissed, handleWheel, handleTouchStart, handleTouchMove]);
 
   // Compute zoom scale: 1x -> 90x directly into third eye
   const isZooming = zoomProgress > 0.002;
@@ -225,12 +224,16 @@ export default function Home() {
   return (
     <main className={styles.main}>
       {/* 1ª SEÇÃO: Hero Pinned com Vídeo dos Ancestrais e Efeito Especial de Portal */}
-      <section
-        className={styles.heroContainer}
-        aria-label="Hero Section"
-        onClick={forcePlayVideos}
-        onTouchStart={forcePlayVideos}
-      >
+      {!heroDismissed && (
+        <section
+          id="hero-portal"
+          className={`${styles.heroContainer} ${
+            isDismissing ? styles.heroDismissing : ""
+          }`}
+          aria-label="Hero Section"
+          onClick={forcePlayVideos}
+          onTouchStart={forcePlayVideos}
+        >
         {/* Desktop Stage (16:9) */}
         <div className={`${styles.videoStage} ${styles.desktopStage}`}>
           <video
@@ -392,7 +395,10 @@ export default function Home() {
         {/* Scroll Hint */}
         <div
           className={styles.scrollHint}
-          style={{ opacity: hintOpacity }}
+          style={{ opacity: hintOpacity, cursor: "pointer" }}
+          onClick={() => {
+            targetProgressRef.current = 1;
+          }}
           aria-hidden="true"
         >
           <div className={styles.mouseIcon}>
@@ -401,6 +407,7 @@ export default function Home() {
           <span className={styles.scrollText}>Role para entrar</span>
         </div>
       </section>
+      )}
 
       {/* 2ª SEÇÃO: 1. Face | 2. iTech Maior | 3. Info Atualizada */}
       <section

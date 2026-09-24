@@ -11,15 +11,26 @@
 
 /* ==================== HERO SECTION (FULL SCREEN, NO SIDE GAPS) ==================== */
 .heroContainer {
-  position: relative;
+  position: fixed;
+  inset: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   min-height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
+  z-index: 1000;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.heroDismissing {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.05);
 }
 
 /* Video Stage spans 100% of the screen with zero side spaces */

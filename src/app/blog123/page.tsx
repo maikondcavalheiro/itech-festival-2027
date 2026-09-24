@@ -1,20 +1,102 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BLOG_POSTS, BLOG_CATEGORIES, BlogCategory } from "@/data/blogPosts";
+import { BlogPost, BLOG_CATEGORIES, BlogCategory } from "@/data/blogPosts";
+import { getStoredPosts } from "@/services/blogService";
 import styles from "./page.module.css";
 
 export default function OrigemEFaiscaBlog() {
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<BlogCategory>("Todas");
   const [searchQuery, setSearchQuery] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
-  // Filtragem combinada por categoria e termo de busca
+  // Áudio sintetizado via Web Audio API (Drone Psicoacústico 432Hz)
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
+  const osc1Ref = useRef<OscillatorNode | null>(null);
+  const osc2Ref = useRef<OscillatorNode | null>(null);
+
+  useEffect(() => {
+    const loaded = getStoredPosts();
+    setAllPosts(loaded.filter((p) => (p.status || "published") === "published"));
+
+    return () => {
+      // Limpeza de áudio ao desmontar
+      if (audioCtxRef.current && audioCtxRef.current.state !== "closed") {
+        audioCtxRef.current.close().catch(() => {});
+      }
+    };
+  }, []);
+
+  const toggleSound = () => {
+    if (isPlayingAudio) {
+      // Fade out
+      if (gainNodeRef.current && audioCtxRef.current) {
+        gainNodeRef.current.gain.setTargetAtTime(0, audioCtxRef.current.currentTime, 0.5);
+        setTimeout(() => {
+          setIsPlayingAudio(false);
+        }, 500);
+      } else {
+        setIsPlayingAudio(false);
+      }
+    } else {
+      try {
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (!AudioContextClass) return;
+
+        if (!audioCtxRef.current || audioCtxRef.current.state === "closed") {
+          audioCtxRef.current = new AudioContextClass();
+        }
+
+        const ctx = audioCtxRef.current;
+        if (ctx.state === "suspended") {
+          ctx.resume();
+        }
+
+        // Criar osciladores harmoniosos (432Hz fundamental + 216Hz sub + 864Hz harmônico)
+        const gainNode = ctx.createGain();
+        gainNode.gain.setValueAtTime(0.01, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 1.5);
+        gainNode.connect(ctx.destination);
+        gainNodeRef.current = gainNode;
+
+        const osc1 = ctx.createOscillator();
+        osc1.type = "sine";
+        osc1.frequency.setValueAtTime(108, ctx.currentTime); // Sub-grave ancestral
+        osc1.connect(gainNode);
+        osc1.start();
+        osc1Ref.current = osc1;
+
+        const osc2 = ctx.createOscillator();
+        osc2.type = "triangle";
+        osc2.frequency.setValueAtTime(432, ctx.currentTime); // Frequência da cura / geometria
+        
+        // Modulação LFO sutil para respirar com a música
+        const lfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        lfo.frequency.setValueAtTime(0.2, ctx.currentTime); // Ciclo lento de 5 segundos
+        lfoGain.gain.setValueAtTime(4, ctx.currentTime);
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc2.frequency);
+        lfo.start();
+
+        osc2.connect(gainNode);
+        osc2.start();
+        osc2Ref.current = osc2;
+
+        setIsPlayingAudio(true);
+      } catch (e) {
+        console.error("Falha ao iniciar áudio ambiental:", e);
+      }
+    }
+  };
+
+  // Filtragem combinada
   const filteredPosts = useMemo(() => {
-    return BLOG_POSTS.filter((post) => {
+    return allPosts.filter((post) => {
       const matchCategory =
         selectedCategory === "Todas" || post.category === selectedCategory;
 
@@ -29,17 +111,17 @@ export default function OrigemEFaiscaBlog() {
 
       return matchCategory && matchSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [allPosts, selectedCategory, searchQuery]);
 
-  // Post em destaque: o marcado como featured (se estiver dentro dos filtros), senão o primeiro da lista filtrada
+  // Post em destaque: o marcado como featured
   const featuredPost = useMemo(() => {
     if (selectedCategory === "Todas" && searchQuery.trim() === "") {
-      return BLOG_POSTS.find((p) => p.featured) || BLOG_POSTS[0];
+      return allPosts.find((p) => p.featured) || allPosts[0];
     }
     return null;
-  }, [selectedCategory, searchQuery]);
+  }, [allPosts, selectedCategory, searchQuery]);
 
-  // Grid posts: exclui o featured quando estamos na visão inicial padrão
+  // Grid posts: exclui o featured quando na visão inicial padrão
   const gridPosts = useMemo(() => {
     if (featuredPost) {
       return filteredPosts.filter((p) => p.id !== featuredPost.id);
@@ -47,77 +129,96 @@ export default function OrigemEFaiscaBlog() {
     return filteredPosts;
   }, [filteredPosts, featuredPost]);
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (emailInput.trim()) {
-      setSubscribed(true);
-      setEmailInput("");
-    }
-  };
-
   const getCategoryCount = (categoryName: BlogCategory) => {
-    if (categoryName === "Todas") return BLOG_POSTS.length;
-    return BLOG_POSTS.filter((p) => p.category === categoryName).length;
+    if (categoryName === "Todas") return allPosts.length;
+    return allPosts.filter((p) => p.category === categoryName).length;
   };
 
   return (
     <main className={styles.blogContainer}>
-      {/* Luzes cósmicas e auras de faísca */}
-      <div className={styles.ambientSparkTop} />
-      <div className={styles.ambientAuraLeft} />
-      <div className={styles.ambientAuraRight} />
-      <div className={styles.gridPattern} />
+      {/* ==================== HERO MONUMENTAL COM A ARTE TEMA ==================== */}
+      <section className={styles.oracleHeroSection} aria-label="Portal de Frequências Ancestrais">
+        <div className={styles.oracleHeroBgWrapper}>
+          <Image
+            src="/blog-theme-art.jpg"
+            alt="Máscara ancestral xamânica e lobos guardiões bioluminescentes do iTech 2027"
+            fill
+            priority
+            className={styles.oracleHeroImage}
+            sizes="100vw"
+          />
+          <div className={styles.oracleGradientOverlay} />
+          <div className={styles.psychAuraCyan} />
+          <div className={styles.psychAuraMagenta} />
+        </div>
 
-      <div className={styles.contentWrapper}>
-        {/* ==================== HERO SECTION ==================== */}
-        <section className={styles.heroSection}>
-          <div className={styles.sealWrapper}>
-            <div className={styles.tribalBadge}>
-              <span className={styles.sparkIcon}>⚡</span>
-              <span>Crônicas & Frequências • iTech 2027</span>
-              <span className={styles.sparkIcon}>⚡</span>
-            </div>
+        <div className={styles.oracleContent}>
+          <div className={styles.mythicBadge}>
+            <span className={styles.sparkleDot}>✧</span>
+            <span>O Oráculo das Frequências • iTech 2027</span>
+            <span className={styles.sparkleDot}>✧</span>
           </div>
 
-          <h1 className={styles.heroTitle}>A Origem e a Faísca</h1>
+          <h1 className={styles.oracleTitle}>A Origem & a Faísca</h1>
 
-          <p className={styles.heroSubtitle}>
-            Onde o fogo ancestral encontra a centelha do futuro. Crônicas sobre a
-            essência do festival, rituais sonoros, arte visionária e a conexão
-            sagrada na Terra da Lua.
+          <p className={styles.oracleSubtitle}>
+            O portal onde a pulsação do trance, a sabedoria ancestral da Terra da Lua
+            e a engenharia visual de ponta se encontram em êxtase cósmico.
           </p>
 
-          <div className={styles.heroDivider}>
-            <span className={styles.dividerLine} />
-            <span className={styles.dividerRune}>᚛ ᚚ ᚜</span>
-            <span className={styles.dividerLine} />
-          </div>
-        </section>
+          {/* Sintetizador de Frequência Sonora Tribal */}
+          <div className={styles.soundFrequencyBar}>
+            <button
+              onClick={toggleSound}
+              type="button"
+              className={`${styles.soundBtn} ${isPlayingAudio ? styles.soundBtnActive : ""}`}
+              aria-label={isPlayingAudio ? "Pausar frequência sonora" : "Ativar frequência sonora 432Hz"}
+            >
+              <span>{isPlayingAudio ? "⏸ Pausar Ressonância" : "▶ Sintonizar 432Hz"}</span>
+            </button>
 
-        {/* ==================== BARRA DE FILTROS E BUSCA ==================== */}
-        <section className={styles.filterBarSection} aria-label="Filtros do Blog">
-          <div className={styles.searchRow}>
-            <div className={styles.searchInputWrapper}>
-              <span className={styles.searchIcon} aria-hidden="true">🔍</span>
+            <div className={styles.waveVisualizer} aria-hidden="true">
+              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
+              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
+              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
+              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
+              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
+            </div>
+
+            <span className={styles.frequencyInfo}>
+              {isPlayingAudio ? "Frequência harmônica ativa em tempo real" : "Áudio ambiente imersivo (opcional)"}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== CORPO PRINCIPAL ==================== */}
+      <div className={styles.contentWrapper}>
+        {/* Painel de Controles Cósmicos (Busca + Glifos de Categorias) */}
+        <section className={styles.controlsSection} aria-label="Navegação e Filtros do Oráculo">
+          <div className={styles.searchBarRow}>
+            <div className={styles.searchBox}>
+              <span className={styles.searchRuneIcon} aria-hidden="true">ᛟ</span>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar por runas, temas, frequências ou autores..."
+                placeholder="Pesquisar crônicas, DJs, rituais, tags ou autores..."
                 className={styles.searchInput}
-                aria-label="Buscar crônicas"
+                aria-label="Buscar publicações"
               />
             </div>
 
-            <div className={styles.searchStats}>
+            <div className={styles.searchCounter}>
               <span>
                 {filteredPosts.length}{" "}
-                {filteredPosts.length === 1 ? "registro revelado" : "registros revelados"}
+                {filteredPosts.length === 1 ? "frequência sintonizada" : "frequências sintonizadas"}
               </span>
             </div>
           </div>
 
-          <div className={styles.categoryList} role="tablist" aria-label="Categorias das Crônicas">
+          {/* Glifos Holográficos de Categorias */}
+          <div className={styles.hologramCategoryGrid} role="tablist">
             {BLOG_CATEGORIES.map((cat) => {
               const isActive = selectedCategory === cat.name;
               return (
@@ -127,64 +228,66 @@ export default function OrigemEFaiscaBlog() {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setSelectedCategory(cat.name)}
-                  className={`${styles.categoryChip} ${isActive ? styles.categoryChipActive : ""}`}
+                  className={`${styles.holoChip} ${isActive ? styles.holoChipActive : ""}`}
                 >
                   <span aria-hidden="true">{cat.icon}</span>
                   <span>{cat.name}</span>
-                  <span className={styles.chipCount}>{getCategoryCount(cat.name)}</span>
+                  <span className={styles.chipCountBadge}>{getCategoryCount(cat.name)}</span>
                 </button>
               );
             })}
           </div>
         </section>
 
-        {/* ==================== ARTIGO DESTAQUE (CHAMA MONUMENTAL) ==================== */}
+        {/* ==================== ARTIGO MONUMENTAL EM DESTAQUE ==================== */}
         {featuredPost && (
-          <section className={styles.featuredSection} aria-label="Crônica Principal em Destaque">
-            <article className={styles.featuredCard}>
-              <div className={styles.featuredImageWrapper}>
+          <section className={styles.featuredMonumentalSection} aria-label="Chama Principal em Destaque">
+            <article className={styles.monumentalCard}>
+              <div className={styles.monumentalImageWrapper}>
                 <Image
                   src={featuredPost.coverImage}
                   alt={featuredPost.coverImageAlt}
                   fill
                   priority
-                  className={styles.featuredImage}
+                  className={styles.monumentalImage}
                   sizes="(max-width: 992px) 100vw, 55vw"
                 />
-                <div className={styles.imageOverlay} />
+                <div className={styles.monumentalImageGlow} />
               </div>
 
-              <div className={styles.featuredContent}>
-                <div className={styles.featuredBadgeRow}>
-                  <span className={styles.featuredPill}>🔥 Chama Primordial</span>
-                  <span className={styles.categoryTag}>{featuredPost.category}</span>
-                  <span className={styles.readTimeTag}>⏱ {featuredPost.readTime}</span>
+              <div className={styles.monumentalContent}>
+                <div className={styles.monumentalBadgeRow}>
+                  <span className={styles.monumentalFlameBadge}>🔥 Chama Monumental</span>
+                  <span className={styles.monumentalCategory}>{featuredPost.category}</span>
+                  <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>⏱ {featuredPost.readTime}</span>
                 </div>
 
-                <h2 className={styles.featuredTitle}>{featuredPost.title}</h2>
+                <h2 className={styles.monumentalTitle}>{featuredPost.title}</h2>
 
-                <p className={styles.featuredExcerpt}>{featuredPost.excerpt}</p>
+                <p className={styles.monumentalExcerpt}>{featuredPost.excerpt}</p>
 
-                <div className={styles.authorAndActionRow}>
-                  <div className={styles.authorInfo}>
-                    <Image
-                      src={featuredPost.author.avatar}
+                <div className={styles.monumentalAuthorRow}>
+                  <div className={styles.monumentalAuthor}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={featuredPost.author.avatar || "/face.png"}
                       alt={featuredPost.author.name}
-                      width={42}
-                      height={42}
-                      className={styles.authorAvatar}
+                      className={styles.monumentalAuthorAvatar}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/face.png";
+                      }}
                     />
                     <div>
-                      <div className={styles.authorName}>{featuredPost.author.name}</div>
-                      <div className={styles.authorRole}>{featuredPost.author.role}</div>
+                      <div className={styles.monumentalAuthorName}>{featuredPost.author.name}</div>
+                      <div className={styles.monumentalAuthorRole}>{featuredPost.author.role}</div>
                     </div>
                   </div>
 
                   <Link
                     href={`/blog123/${featuredPost.slug}`}
-                    className={styles.readButton}
+                    className={styles.portalActionBtn}
                   >
-                    <span>Ler Crônica</span>
+                    <span>Entrar no Portal</span>
                     <span aria-hidden="true">→</span>
                   </Link>
                 </div>
@@ -193,67 +296,77 @@ export default function OrigemEFaiscaBlog() {
           </section>
         )}
 
-        {/* ==================== GRADE DE CRÔNICAS ==================== */}
-        <section aria-label="Todas as Crônicas">
-          <div className={styles.sectionTitleRow}>
-            <h2 className={styles.sectionTitle}>
-              <span className={styles.sectionRune}>ᛟ</span>
+        {/* ==================== TOTENS CRISTALINOS (GRADE DE CRÔNICAS) ==================== */}
+        <section aria-label="Todas as Crônicas da Tribo">
+          <div className={styles.streamSectionTitleRow}>
+            <h2 className={styles.streamSectionTitle}>
+              <span className={styles.streamRune}>᚛ ⚡ ᚜</span>
               <span>
                 {selectedCategory === "Todas"
-                  ? "Crônicas da Tribo"
-                  : `Trilha: ${selectedCategory}`}
+                  ? "Crônicas & Frequências Ativas"
+                  : `Trilha Sagrada: ${selectedCategory}`}
               </span>
             </h2>
           </div>
 
           {gridPosts.length > 0 ? (
-            <div className={styles.articleGrid}>
+            <div className={styles.crystalTotemGrid}>
               {gridPosts.map((post) => (
-                <article key={post.id} className={styles.articleCard}>
-                  <div className={styles.cardImageWrapper}>
-                    <Image
-                      src={post.coverImage}
-                      alt={post.coverImageAlt}
-                      fill
-                      className={styles.cardImage}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                <article key={post.id} className={styles.crystalTotemCard}>
+                  <div className={styles.totemImageWrapper}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={post.coverImage || "/blog/fogo-primordial.jpg"}
+                      alt={post.coverImageAlt || post.title}
+                      className={styles.totemImage}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/blog/fogo-primordial.jpg";
+                      }}
                     />
-                    <div className={styles.cardCategoryBadge}>{post.category}</div>
+                    <div className={styles.totemCategoryBadge}>{post.category}</div>
                   </div>
 
-                  <div className={styles.cardBody}>
-                    <div className={styles.cardMetaRow}>
+                  <div className={styles.totemBody}>
+                    <div className={styles.totemMetaRow}>
                       <span>{post.dateDisplay}</span>
                       <span>⏱ {post.readTime}</span>
+                      {post.youtubeUrl && (
+                        <span className={styles.videoNeonBadge}>▶ Vídeo</span>
+                      )}
                     </div>
 
-                    <h3 className={styles.cardTitle}>{post.title}</h3>
+                    <h3 className={styles.totemTitle}>{post.title}</h3>
 
-                    <p className={styles.cardExcerpt}>{post.excerpt}</p>
+                    <p className={styles.totemExcerpt}>{post.excerpt}</p>
 
-                    <div className={styles.tagRow}>
-                      {post.tags.map((tag) => (
-                        <span key={tag} className={styles.tagPill}>
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
+                    {post.tags && post.tags.length > 0 && (
+                      <div className={styles.totemTags}>
+                        {post.tags.map((tag) => (
+                          <span key={tag} className={styles.totemTagPill}>
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
-                    <div className={styles.cardFooter}>
-                      <div className={styles.cardAuthor}>
-                        <Image
-                          src={post.author.avatar}
+                    <div className={styles.totemFooter}>
+                      <div className={styles.totemAuthor}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={post.author.avatar || "/face.png"}
                           alt={post.author.name}
-                          width={28}
-                          height={28}
-                          className={styles.cardAuthorAvatar}
+                          className={styles.totemAuthorAvatar}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "/face.png";
+                          }}
                         />
-                        <span className={styles.cardAuthorName}>{post.author.name}</span>
+                        <span className={styles.totemAuthorName}>{post.author.name}</span>
                       </div>
 
                       <Link
                         href={`/blog123/${post.slug}`}
-                        className={styles.cardReadLink}
+                        className={styles.totemExploreLink}
                       >
                         <span>Explorar</span>
                         <span aria-hidden="true">→</span>
@@ -266,9 +379,9 @@ export default function OrigemEFaiscaBlog() {
           ) : (
             <div className={styles.emptyState}>
               <div className={styles.emptyRune}>⚡</div>
-              <h3 className={styles.emptyTitle}>Nenhuma frequência encontrada</h3>
-              <p className={styles.emptyText}>
-                Nenhum registro corresponde ao termo &ldquo;{searchQuery}&rdquo; na categoria selecionada.
+              <h3>Nenhuma frequência revelada</h3>
+              <p style={{ color: "#94a3b8", marginTop: "0.5rem" }}>
+                Não encontramos crônicas para &ldquo;{searchQuery}&rdquo; na trilha selecionada.
               </p>
               <button
                 type="button"
@@ -278,44 +391,22 @@ export default function OrigemEFaiscaBlog() {
                 }}
                 className={styles.emptyResetBtn}
               >
-                Limpar Filtros & Revelar Todas
+                Resetar Filtros & Revelar Todas
               </button>
             </div>
           )}
         </section>
 
-        {/* ==================== NEWSLETTER TRIBAL ==================== */}
-        <section className={styles.newsletterSection} aria-label="Sintonizar a Frequência Tribal">
-          <div className={styles.newsletterContent}>
-            <span className={styles.newsletterBadge}>✧ Frequência Direta</span>
-            <h2 className={styles.newsletterTitle}>Sintonize a Centelha Ancestral</h2>
-            <p className={styles.newsletterDescription}>
-              Receba antes de todos as novas crônicas, revelações do line-up, mapas
-              secretos da Terra da Lua e ensinamentos da tribo iTech 2027.
-            </p>
-
-            {subscribed ? (
-              <div className={styles.newsletterSuccess}>
-                <span>⚡ Sua conexão foi sintonizada com sucesso nos registros ancestrais!</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className={styles.newsletterForm}>
-                <input
-                  type="email"
-                  required
-                  value={emailInput}
-                  onChange={(e) => setEmailInput(e.target.value)}
-                  placeholder="Seu melhor e-mail cósmico..."
-                  className={styles.newsletterInput}
-                  aria-label="E-mail para newsletter tribal"
-                />
-                <button type="submit" className={styles.newsletterButton}>
-                  Conectar à Frequência
-                </button>
-              </form>
-            )}
-          </div>
-        </section>
+        {/* ==================== RODAPÉ DO BLOG / ACESSO DO REDATOR ==================== */}
+        <div className={styles.adminAccessBar}>
+          <span className={styles.adminAccessText}>
+            ⚡ A Origem e a Faísca • Portal Editorial Cósmico iTech 2027
+          </span>
+          <Link href="/blog123/login" className={styles.adminAccessLink}>
+            <span>🔒</span>
+            <span>Área do Redator / Publicar Matéria</span>
+          </Link>
+        </div>
       </div>
     </main>
   );

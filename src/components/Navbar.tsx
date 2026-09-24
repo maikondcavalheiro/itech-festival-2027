@@ -41,6 +41,14 @@ export default function Navbar() {
     }
 
     const updateVisibility = () => {
+      // Se a Hero Intro ainda estiver visível na Home, o menu fica oculto
+      const heroElement = document.getElementById("hero-portal");
+      if (heroElement) {
+        setIsVisible(false);
+        setIsScrolled(false);
+        return;
+      }
+
       const secondSection = document.getElementById("segunda-secao");
       if (secondSection) {
         const rect = secondSection.getBoundingClientRect();
