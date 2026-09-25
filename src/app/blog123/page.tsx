@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BlogPost, BLOG_CATEGORIES, BlogCategory } from "@/data/blogPosts";
@@ -11,88 +11,11 @@ export default function OrigemEFaiscaBlog() {
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<BlogCategory>("Todas");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-
-  // Áudio sintetizado via Web Audio API (Drone Psicoacústico 432Hz)
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const gainNodeRef = useRef<GainNode | null>(null);
-  const osc1Ref = useRef<OscillatorNode | null>(null);
-  const osc2Ref = useRef<OscillatorNode | null>(null);
 
   useEffect(() => {
     const loaded = getStoredPosts();
     setAllPosts(loaded.filter((p) => (p.status || "published") === "published"));
-
-    return () => {
-      // Limpeza de áudio ao desmontar
-      if (audioCtxRef.current && audioCtxRef.current.state !== "closed") {
-        audioCtxRef.current.close().catch(() => {});
-      }
-    };
   }, []);
-
-  const toggleSound = () => {
-    if (isPlayingAudio) {
-      // Fade out
-      if (gainNodeRef.current && audioCtxRef.current) {
-        gainNodeRef.current.gain.setTargetAtTime(0, audioCtxRef.current.currentTime, 0.5);
-        setTimeout(() => {
-          setIsPlayingAudio(false);
-        }, 500);
-      } else {
-        setIsPlayingAudio(false);
-      }
-    } else {
-      try {
-        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-        if (!AudioContextClass) return;
-
-        if (!audioCtxRef.current || audioCtxRef.current.state === "closed") {
-          audioCtxRef.current = new AudioContextClass();
-        }
-
-        const ctx = audioCtxRef.current;
-        if (ctx.state === "suspended") {
-          ctx.resume();
-        }
-
-        // Criar osciladores harmoniosos (432Hz fundamental + 216Hz sub + 864Hz harmônico)
-        const gainNode = ctx.createGain();
-        gainNode.gain.setValueAtTime(0.01, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 1.5);
-        gainNode.connect(ctx.destination);
-        gainNodeRef.current = gainNode;
-
-        const osc1 = ctx.createOscillator();
-        osc1.type = "sine";
-        osc1.frequency.setValueAtTime(108, ctx.currentTime); // Sub-grave ancestral
-        osc1.connect(gainNode);
-        osc1.start();
-        osc1Ref.current = osc1;
-
-        const osc2 = ctx.createOscillator();
-        osc2.type = "triangle";
-        osc2.frequency.setValueAtTime(432, ctx.currentTime); // Frequência da cura / geometria
-        
-        // Modulação LFO sutil para respirar com a música
-        const lfo = ctx.createOscillator();
-        const lfoGain = ctx.createGain();
-        lfo.frequency.setValueAtTime(0.2, ctx.currentTime); // Ciclo lento de 5 segundos
-        lfoGain.gain.setValueAtTime(4, ctx.currentTime);
-        lfo.connect(lfoGain);
-        lfoGain.connect(osc2.frequency);
-        lfo.start();
-
-        osc2.connect(gainNode);
-        osc2.start();
-        osc2Ref.current = osc2;
-
-        setIsPlayingAudio(true);
-      } catch (e) {
-        console.error("Falha ao iniciar áudio ambiental:", e);
-      }
-    }
-  };
 
   // Filtragem combinada
   const filteredPosts = useMemo(() => {
@@ -155,7 +78,7 @@ export default function OrigemEFaiscaBlog() {
         <div className={styles.oracleContent}>
           <div className={styles.mythicBadge}>
             <span className={styles.sparkleDot}>✧</span>
-            <span>O Oráculo das Frequências • iTech 2027</span>
+            <span>Blog iTech Festival</span>
             <span className={styles.sparkleDot}>✧</span>
           </div>
 
@@ -166,28 +89,17 @@ export default function OrigemEFaiscaBlog() {
             e a engenharia visual de ponta se encontram em êxtase cósmico.
           </p>
 
-          {/* Sintetizador de Frequência Sonora Tribal */}
-          <div className={styles.soundFrequencyBar}>
-            <button
-              onClick={toggleSound}
-              type="button"
-              className={`${styles.soundBtn} ${isPlayingAudio ? styles.soundBtnActive : ""}`}
-              aria-label={isPlayingAudio ? "Pausar frequência sonora" : "Ativar frequência sonora 432Hz"}
-            >
-              <span>{isPlayingAudio ? "⏸ Pausar Ressonância" : "▶ Sintonizar 432Hz"}</span>
-            </button>
-
-            <div className={styles.waveVisualizer} aria-hidden="true">
-              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
-              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
-              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
-              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
-              <span className={`${styles.waveBar} ${isPlayingAudio ? styles.waveBarActive : ""}`} />
-            </div>
-
-            <span className={styles.frequencyInfo}>
-              {isPlayingAudio ? "Frequência harmônica ativa em tempo real" : "Áudio ambiente imersivo (opcional)"}
-            </span>
+          {/* Spotify Player Oficial da Playlist */}
+          <div className={styles.spotifyPlayerWrapper}>
+            <iframe
+              style={{ borderRadius: "16px", border: "0" }}
+              src="https://open.spotify.com/embed/playlist/4qeaKqhIuYmksMBacX3Dfk?utm_source=generator&theme=0"
+              width="100%"
+              height="152"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              title="Playlist Oficial iTech Festival no Spotify"
+            />
           </div>
         </div>
       </section>
