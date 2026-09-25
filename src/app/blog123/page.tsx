@@ -158,21 +158,22 @@ export default function OrigemEFaiscaBlog() {
           </section>
         )}
 
-        {/* ==================== LAYOUT DE 2 COLUNAS: FEED PRINCIPAL (3 POSTS/LINHA) + SIDEBAR ==================== */}
+        {/* Título da Seção alinhado no topo */}
+        <div className={styles.streamSectionTitleRow}>
+          <h2 className={styles.streamSectionTitle}>
+            <span className={styles.streamRune}>🔥</span>
+            <span>
+              {selectedCategory === "Todas"
+                ? "Artigos & Crônicas"
+                : `Trilha: ${selectedCategory}`}
+            </span>
+          </h2>
+        </div>
+
+        {/* ==================== LAYOUT DE 2 COLUNAS: FEED PRINCIPAL (2 POSTS/LINHA) + SIDEBAR ==================== */}
         <div className={styles.mainFeedWithSidebarLayout}>
           {/* Coluna Principal: Grade de Posts */}
           <section className={styles.primaryFeedCol} aria-label="Todas as Crônicas da Tribo">
-            <div className={styles.streamSectionTitleRow}>
-              <h2 className={styles.streamSectionTitle}>
-                <span className={styles.streamRune}>🔥</span>
-                <span>
-                  {selectedCategory === "Todas"
-                    ? "Artigos & Crônicas Sagradas"
-                    : `Trilha Sagrada: ${selectedCategory}`}
-                </span>
-              </h2>
-            </div>
-
             {gridPosts.length > 0 ? (
               <div className={styles.crystalTotemGrid}>
                 {gridPosts.map((post) => (
@@ -255,9 +256,9 @@ export default function OrigemEFaiscaBlog() {
             )}
           </section>
 
-          {/* Coluna Lateral (Sidebar): Trilha Sonora Spotify no topo, Busca e Categorias */}
+          {/* Coluna Lateral (Sidebar): Trilha Sonora Spotify alinhada aos cards, seguida por Categorias + Busca */}
           <aside className={styles.blogSidebar} aria-label="Navegação Lateral e Frequências">
-            {/* Player Spotify Direto (Sem caixa/card envolvente, nativo e limpo) */}
+            {/* Player Spotify Direto (Alinhado com a linha dos posts) */}
             <div className={styles.spotifyDirectContainer}>
               <iframe
                 style={{ borderRadius: "16px", border: "0" }}
@@ -270,37 +271,13 @@ export default function OrigemEFaiscaBlog() {
               />
             </div>
 
-            {/* Widget de Pesquisa */}
-            <div className={styles.sidebarWidget}>
-              <h3 className={styles.sidebarWidgetTitle}>
-                <span className={styles.sidebarWidgetRune}>ᛟ</span>
-                <span>Pesquisar</span>
-              </h3>
-              <div className={styles.searchBox}>
-                <span className={styles.searchRuneIcon} aria-hidden="true">🔍</span>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar crônicas, DJs..."
-                  className={styles.searchInput}
-                  aria-label="Buscar publicações"
-                />
-              </div>
-              <div className={styles.searchCounter}>
-                <span>
-                  {filteredPosts.length}{" "}
-                  {filteredPosts.length === 1 ? "frequência sintonizada" : "frequências sintonizadas"}
-                </span>
-              </div>
-            </div>
-
-            {/* Widget de Categorias */}
+            {/* Widget Unificado de Categorias com Pesquisa embutida na parte inferior */}
             <div className={styles.sidebarWidget}>
               <h3 className={styles.sidebarWidgetTitle}>
                 <span className={styles.sidebarWidgetRune}>✧</span>
                 <span>Trilhas & Categorias</span>
               </h3>
+
               <div className={styles.sidebarCategoryList} role="tablist">
                 {BLOG_CATEGORIES.map((cat) => {
                   const isActive = selectedCategory === cat.name;
@@ -321,6 +298,28 @@ export default function OrigemEFaiscaBlog() {
                     </button>
                   );
                 })}
+              </div>
+
+              {/* Divisória e Campo de Pesquisa embutido abaixo dos itens */}
+              <div className={styles.sidebarSearchWrapper}>
+                <span className={styles.sidebarSearchLabel}>Pesquisar no Acervo</span>
+                <div className={styles.searchBox}>
+                  <span className={styles.searchRuneIcon} aria-hidden="true">🔍</span>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Buscar artigo, DJ, tema..."
+                    className={styles.searchInput}
+                    aria-label="Buscar publicações"
+                  />
+                </div>
+                <div className={styles.searchCounter}>
+                  <span>
+                    {filteredPosts.length}{" "}
+                    {filteredPosts.length === 1 ? "publicação encontrada" : "publicações encontradas"}
+                  </span>
+                </div>
               </div>
             </div>
           </aside>

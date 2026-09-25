@@ -326,6 +326,23 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.sidebarSearchWrapper {
+  margin-top: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sidebarSearchLabel {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 /* ==================== POST HERO DESTAQUE CÓSMICO ==================== */
 .featuredMonumentalSection {
   margin-bottom: 5rem;
