@@ -237,17 +237,17 @@ export default function Footer() {
                   </svg>
                 </a>
 
-                {/* Soundcloud / Audio */}
+                {/* Spotify / Playlist */}
                 <a
-                  href="https://soundcloud.com"
+                  href="https://open.spotify.com/playlist/4qeaKqhIuYmksMBacX3Dfk?si=pt9TmVVeRW-YD8CuG5DDgQ&utm_source=copy-link&pi=6cOLgWpBQXGBx&nd=1&dlsi=15705cf3987e43f9"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.socialIconBtn}
-                  aria-label="SoundCloud Sets & Podcasts"
+                  aria-label="Spotify Playlist Oficial"
+                  title="Playlist Spotify Oficial"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
-                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.496 17.306c-.215.352-.676.463-1.028.247-2.812-1.718-6.353-2.107-10.524-1.155-.403.092-.806-.16-.898-.564-.092-.403.16-.806.564-.898 4.568-1.044 8.502-.601 11.639 1.342.352.216.463.676.247 1.028zm1.468-3.264c-.27.441-.848.58-1.289.31-3.218-1.978-8.124-2.55-11.93-1.394-.496.15-1.024-.136-1.174-.632-.15-.496.136-1.024.632-1.174 4.356-1.321 9.774-.683 13.451 1.579.441.27.58.848.31 1.289zm.126-3.41c-3.859-2.292-10.228-2.503-13.906-1.386-.59.179-1.218-.16-1.397-.75-.179-.59.16-1.218.75-1.397 4.234-1.285 11.264-1.037 15.698 1.595.53.315.704 1.003.389 1.533-.315.53-1.003.704-1.534.405z" />
                   </svg>
                 </a>
 
