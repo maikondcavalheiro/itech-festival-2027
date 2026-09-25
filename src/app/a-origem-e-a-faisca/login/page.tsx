@@ -21,7 +21,7 @@ export default function BlogLoginPage() {
     setTimeout(() => {
       const success = loginAdmin(password);
       if (success) {
-        router.push("/blog123/admin");
+        router.push("/a-origem-e-a-faisca/admin");
       } else {
         setError("Chave de acesso incorreta. Tente novamente.");
         setLoading(false);
@@ -86,7 +86,7 @@ export default function BlogLoginPage() {
         </form>
 
         <div className={styles.cardFooter}>
-          <Link href="/blog123" className={styles.backLink}>
+          <Link href="/a-origem-e-a-faisca" className={styles.backLink}>
             ← Voltar para a vitrine do blog
           </Link>
           <span className={styles.hintText}>

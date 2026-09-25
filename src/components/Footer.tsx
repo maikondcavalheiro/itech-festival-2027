@@ -102,6 +102,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/a-origem-e-a-faisca" className={styles.footerLink}>
+                  A Origem & a Faísca
+                  <span className={styles.tagNew}>Blog</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/store" className={styles.footerLink}>
                   iTech Store & Lookbook
                   <span className={styles.tagNew}>Acervo</span>

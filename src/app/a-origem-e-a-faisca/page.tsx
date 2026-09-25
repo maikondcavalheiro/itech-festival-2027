@@ -135,7 +135,7 @@ export default function OrigemEFaiscaBlog() {
               {currentFeatured && (
                 <Link
                   key={currentFeatured.id}
-                  href={`/blog123/${currentFeatured.slug}`}
+                  href={`/a-origem-e-a-faisca/${currentFeatured.slug}`}
                   className={styles.monumentalCard}
                   aria-label={`Ver conteúdo: ${currentFeatured.title}`}
                 >
@@ -255,7 +255,7 @@ export default function OrigemEFaiscaBlog() {
                 {gridPosts.map((post) => (
                   <Link
                     key={post.id}
-                    href={`/blog123/${post.slug}`}
+                    href={`/a-origem-e-a-faisca/${post.slug}`}
                     className={styles.crystalTotemCard}
                     aria-label={`Ver conteúdo: ${post.title}`}
                   >

@@ -45,7 +45,7 @@ export default function SingleBlogPostPage() {
           <p style={{ color: "#94a3b8", marginBottom: "2rem" }}>
             A frequência solicitada não foi registrada ou o artigo foi movido.
           </p>
-          <Link href="/blog123" className={styles.backLink}>
+          <Link href="/a-origem-e-a-faisca" className={styles.backLink}>
             ← Retornar à Tribo & Blog
           </Link>
         </div>
@@ -69,7 +69,7 @@ export default function SingleBlogPostPage() {
       <article className={styles.contentWrapper}>
         {/* Navegação Superior */}
         <nav className={styles.navigationTop}>
-          <Link href="/blog123" className={styles.backLink}>
+          <Link href="/a-origem-e-a-faisca" className={styles.backLink}>
             ← Voltar para todas as publicações
           </Link>
           <span style={{ fontSize: "0.8rem", color: "#64748b" }}>iTech 2027 • Origem & Faísca</span>
@@ -181,7 +181,7 @@ export default function SingleBlogPostPage() {
             </div>
           </div>
 
-          <Link href="/blog123" className={styles.exploreMoreBtn}>
+          <Link href="/a-origem-e-a-faisca" className={styles.exploreMoreBtn}>
             Explorar Mais Artigos ⚡
           </Link>
         </footer>

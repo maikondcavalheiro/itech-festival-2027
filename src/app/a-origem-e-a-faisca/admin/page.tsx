@@ -50,7 +50,7 @@ export default function BlogAdminDashboard() {
   useEffect(() => {
     setMounted(true);
     if (!isUserAuthenticated()) {
-      router.push("/blog123/login");
+      router.push("/a-origem-e-a-faisca/login");
       return;
     }
     setPosts(getStoredPosts());
@@ -58,7 +58,7 @@ export default function BlogAdminDashboard() {
 
   const handleLogout = () => {
     logoutAdmin();
-    router.push("/blog123/login");
+    router.push("/a-origem-e-a-faisca/login");
   };
 
   const reloadPosts = () => {
@@ -301,7 +301,7 @@ export default function BlogAdminDashboard() {
           </div>
 
           <div className={styles.userActions}>
-            <Link href="/blog123" target="_blank" className={styles.publicViewBtn}>
+            <Link href="/a-origem-e-a-faisca" target="_blank" className={styles.publicViewBtn}>
               <span>↗</span>
               <span>Ver Blog ao Vivo</span>
             </Link>

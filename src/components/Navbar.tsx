@@ -13,6 +13,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
+  { label: "A ORIGEM E A FAÍSCA", href: "/a-origem-e-a-faisca" },
   { label: "ITECH - STORE", href: "/store" },
   { label: "TERRA DA LUA", href: "/#terra-da-lua" },
   { label: "PROGRAMAÇÃO", href: "/#programacao" },
