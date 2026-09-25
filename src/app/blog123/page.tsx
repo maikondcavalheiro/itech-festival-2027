@@ -92,8 +92,8 @@ export default function OrigemEFaiscaBlog() {
           <h1 className={styles.oracleTitle}>A Origem & a Faísca</h1>
 
           <p className={styles.oracleSubtitle}>
-            O portal onde a pulsação do trance, a sabedoria ancestral da Terra da Lua
-            e a engenharia visual de ponta se encontram em êxtase cósmico.
+            Notícias, cronogramas, cultura trance e os bastidores da celebração
+            na Terra da Lua em Guarapuava.
           </p>
         </div>
       </section>
