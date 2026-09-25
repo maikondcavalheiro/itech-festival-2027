@@ -95,70 +95,12 @@ export default function OrigemEFaiscaBlog() {
             O portal onde a pulsação do trance, a sabedoria ancestral da Terra da Lua
             e a engenharia visual de ponta se encontram em êxtase cósmico.
           </p>
-
-          {/* Spotify Player Oficial da Playlist */}
-          <div className={styles.spotifyPlayerWrapper}>
-            <iframe
-              style={{ borderRadius: "16px", border: "0" }}
-              src="https://open.spotify.com/embed/playlist/4qeaKqhIuYmksMBacX3Dfk?utm_source=generator&theme=0"
-              width="100%"
-              height="152"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              title="Playlist Oficial iTech Festival no Spotify"
-            />
-          </div>
         </div>
       </section>
 
       {/* ==================== CORPO PRINCIPAL ==================== */}
       <div className={styles.contentWrapper}>
-        {/* Painel de Controles Cósmicos (Busca + Glifos de Categorias) */}
-        <section className={styles.controlsSection} aria-label="Navegação e Filtros do Oráculo">
-          <div className={styles.searchBarRow}>
-            <div className={styles.searchBox}>
-              <span className={styles.searchRuneIcon} aria-hidden="true">ᛟ</span>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Pesquisar crônicas, DJs, rituais, tags ou autores..."
-                className={styles.searchInput}
-                aria-label="Buscar publicações"
-              />
-            </div>
-
-            <div className={styles.searchCounter}>
-              <span>
-                {filteredPosts.length}{" "}
-                {filteredPosts.length === 1 ? "frequência sintonizada" : "frequências sintonizadas"}
-              </span>
-            </div>
-          </div>
-
-          {/* Glifos Holográficos de Categorias */}
-          <div className={styles.hologramCategoryGrid} role="tablist">
-            {BLOG_CATEGORIES.map((cat) => {
-              const isActive = selectedCategory === cat.name;
-              return (
-                <button
-                  key={cat.slug}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setSelectedCategory(cat.name)}
-                  className={`${styles.holoChip} ${isActive ? styles.holoChipActive : ""}`}
-                >
-                  <span aria-hidden="true">{cat.icon}</span>
-                  <span>{cat.name}</span>
-                  <span className={styles.chipCountBadge}>{getCategoryCount(cat.name)}</span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ==================== ARTIGO MONUMENTAL EM DESTAQUE ==================== */}
+        {/* ==================== ARTIGO MONUMENTAL EM DESTAQUE (TOPO) ==================== */}
         {featuredPost && (
           <section className={styles.featuredMonumentalSection} aria-label="Chama Principal em Destaque">
             <Link
@@ -216,100 +158,179 @@ export default function OrigemEFaiscaBlog() {
           </section>
         )}
 
-        {/* ==================== TOTENS CRISTALINOS (GRADE DE CRÔNICAS) ==================== */}
-        <section aria-label="Todas as Crônicas da Tribo">
-          <div className={styles.streamSectionTitleRow}>
-            <h2 className={styles.streamSectionTitle}>
-              <span className={styles.streamRune}>᚛ ⚡ ᚜</span>
-              <span>
-                {selectedCategory === "Todas"
-                  ? "Crônicas & Frequências Ativas"
-                  : `Trilha Sagrada: ${selectedCategory}`}
-              </span>
-            </h2>
-          </div>
+        {/* ==================== LAYOUT DE 2 COLUNAS: FEED PRINCIPAL (3 POSTS/LINHA) + SIDEBAR ==================== */}
+        <div className={styles.mainFeedWithSidebarLayout}>
+          {/* Coluna Principal: Grade de Posts */}
+          <section className={styles.primaryFeedCol} aria-label="Todas as Crônicas da Tribo">
+            <div className={styles.streamSectionTitleRow}>
+              <h2 className={styles.streamSectionTitle}>
+                <span className={styles.streamRune}>᚛ ⚡ ᚜</span>
+                <span>
+                  {selectedCategory === "Todas"
+                    ? "Crônicas & Frequências Ativas"
+                    : `Trilha Sagrada: ${selectedCategory}`}
+                </span>
+              </h2>
+            </div>
 
-          {gridPosts.length > 0 ? (
-            <div className={styles.crystalTotemGrid}>
-              {gridPosts.map((post) => (
-                <Link
-                  key={post.id}
-                  href={`/blog123/${post.slug}`}
-                  className={styles.crystalTotemCard}
-                  aria-label={`Ver conteúdo: ${post.title}`}
-                >
-                  <article className={styles.totemArticleInner}>
-                    <div className={styles.totemImageWrapper}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={post.coverImage || "/blog/fogo-primordial.jpg"}
-                        alt={post.coverImageAlt || post.title}
-                        className={styles.totemImage}
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "/blog/fogo-primordial.jpg";
-                        }}
-                      />
-                      <div className={styles.totemCategoryBadge}>{post.category}</div>
-                    </div>
-
-                    <div className={styles.totemBody}>
-                      <div className={styles.totemMetaRow}>
-                        <span>{post.dateDisplay}</span>
-                        <span>⏱ {post.readTime}</span>
-                        {post.youtubeUrl && (
-                          <span className={styles.videoNeonBadge}>▶ Vídeo</span>
-                        )}
+            {gridPosts.length > 0 ? (
+              <div className={styles.crystalTotemGrid}>
+                {gridPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/blog123/${post.slug}`}
+                    className={styles.crystalTotemCard}
+                    aria-label={`Ver conteúdo: ${post.title}`}
+                  >
+                    <article className={styles.totemArticleInner}>
+                      <div className={styles.totemImageWrapper}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={post.coverImage || "/blog/fogo-primordial.jpg"}
+                          alt={post.coverImageAlt || post.title}
+                          className={styles.totemImage}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "/blog/fogo-primordial.jpg";
+                          }}
+                        />
+                        <div className={styles.totemCategoryBadge}>{post.category}</div>
                       </div>
 
-                      <h3 className={styles.totemTitle}>{post.title}</h3>
-
-                      <p className={styles.totemExcerpt}>{post.excerpt}</p>
-
-                      <div className={styles.totemFooter}>
-                        <div className={styles.totemAuthor}>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={post.author.avatar || "/face.png"}
-                            alt={post.author.name}
-                            className={styles.totemAuthorAvatar}
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = "/face.png";
-                            }}
-                          />
-                          <span className={styles.totemAuthorName}>{post.author.name}</span>
+                      <div className={styles.totemBody}>
+                        <div className={styles.totemMetaRow}>
+                          <span>{post.dateDisplay}</span>
+                          <span>⏱ {post.readTime}</span>
+                          {post.youtubeUrl && (
+                            <span className={styles.videoNeonBadge}>▶ Vídeo</span>
+                          )}
                         </div>
 
-                        <span className={styles.totemExploreLink}>
-                          <span>Ver Conteúdo</span>
-                          <span aria-hidden="true">→</span>
-                        </span>
+                        <h3 className={styles.totemTitle}>{post.title}</h3>
+
+                        <p className={styles.totemExcerpt}>{post.excerpt}</p>
+
+                        <div className={styles.totemFooter}>
+                          <div className={styles.totemAuthor}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={post.author.avatar || "/face.png"}
+                              alt={post.author.name}
+                              className={styles.totemAuthorAvatar}
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = "/face.png";
+                              }}
+                            />
+                            <span className={styles.totemAuthorName}>{post.author.name}</span>
+                          </div>
+
+                          <span className={styles.totemExploreLink}>
+                            <span>Ver Conteúdo</span>
+                            <span aria-hidden="true">→</span>
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                </Link>
-              ))}
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.emptyState}>
+                <div className={styles.emptyRune}>⚡</div>
+                <h3>Nenhuma frequência revelada</h3>
+                <p style={{ color: "#94a3b8", marginTop: "0.5rem" }}>
+                  Não encontramos crônicas para &ldquo;{searchQuery}&rdquo; na trilha selecionada.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("Todas");
+                  }}
+                  className={styles.emptyResetBtn}
+                >
+                  Resetar Filtros & Revelar Todas
+                </button>
+              </div>
+            )}
+          </section>
+
+          {/* Coluna Lateral (Sidebar): Busca, Categorias e Trilha Sonora Spotify */}
+          <aside className={styles.blogSidebar} aria-label="Navegação Lateral e Frequências">
+            {/* Widget de Pesquisa */}
+            <div className={styles.sidebarWidget}>
+              <h3 className={styles.sidebarWidgetTitle}>
+                <span className={styles.sidebarWidgetRune}>ᛟ</span>
+                <span>Pesquisar</span>
+              </h3>
+              <div className={styles.searchBox}>
+                <span className={styles.searchRuneIcon} aria-hidden="true">🔍</span>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Buscar crônicas, DJs..."
+                  className={styles.searchInput}
+                  aria-label="Buscar publicações"
+                />
+              </div>
+              <div className={styles.searchCounter}>
+                <span>
+                  {filteredPosts.length}{" "}
+                  {filteredPosts.length === 1 ? "frequência sintonizada" : "frequências sintonizadas"}
+                </span>
+              </div>
             </div>
-          ) : (
-            <div className={styles.emptyState}>
-              <div className={styles.emptyRune}>⚡</div>
-              <h3>Nenhuma frequência revelada</h3>
-              <p style={{ color: "#94a3b8", marginTop: "0.5rem" }}>
-                Não encontramos crônicas para &ldquo;{searchQuery}&rdquo; na trilha selecionada.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("Todas");
-                }}
-                className={styles.emptyResetBtn}
-              >
-                Resetar Filtros & Revelar Todas
-              </button>
+
+            {/* Widget de Categorias */}
+            <div className={styles.sidebarWidget}>
+              <h3 className={styles.sidebarWidgetTitle}>
+                <span className={styles.sidebarWidgetRune}>✧</span>
+                <span>Trilhas & Categorias</span>
+              </h3>
+              <div className={styles.sidebarCategoryList} role="tablist">
+                {BLOG_CATEGORIES.map((cat) => {
+                  const isActive = selectedCategory === cat.name;
+                  return (
+                    <button
+                      key={cat.slug}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => setSelectedCategory(cat.name)}
+                      className={`${styles.sidebarCategoryBtn} ${isActive ? styles.sidebarCategoryBtnActive : ""}`}
+                    >
+                      <span className={styles.sidebarCatLeft}>
+                        <span aria-hidden="true">{cat.icon}</span>
+                        <span>{cat.name}</span>
+                      </span>
+                      <span className={styles.chipCountBadge}>{getCategoryCount(cat.name)}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          )}
-        </section>
+
+            {/* Widget de Trilha Sonora / Spotify Playlist */}
+            <div className={styles.sidebarWidget}>
+              <h3 className={styles.sidebarWidgetTitle}>
+                <span className={styles.sidebarWidgetRune}>🎵</span>
+                <span>Trilha Sonora Oficial</span>
+              </h3>
+              <div className={styles.spotifyPlayerWrapper}>
+                <iframe
+                  style={{ borderRadius: "16px", border: "0" }}
+                  src="https://open.spotify.com/embed/playlist/4qeaKqhIuYmksMBacX3Dfk?utm_source=generator&theme=0"
+                  width="100%"
+                  height="352"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  title="Playlist Oficial iTech Festival no Spotify"
+                />
+              </div>
+            </div>
+          </aside>
+        </div>
 
         {/* ==================== RODAPÉ DO BLOG / ACESSO DO REDATOR ==================== */}
         <div className={styles.adminAccessBar}>
