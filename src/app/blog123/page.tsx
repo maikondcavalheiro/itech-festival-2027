@@ -92,7 +92,7 @@ export default function OrigemEFaiscaBlog() {
           <h1 className={styles.oracleTitle}>A Origem & a Faísca</h1>
 
           <p className={styles.oracleSubtitle}>
-            Notícias, cronogramas, cultura trance e os bastidores da itech festival
+            Notícias, cronogramas, cultura trance e os bastidores do iTech Festival
           </p>
         </div>
       </section>
