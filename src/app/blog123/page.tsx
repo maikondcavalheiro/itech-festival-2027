@@ -164,10 +164,10 @@ export default function OrigemEFaiscaBlog() {
           <section className={styles.primaryFeedCol} aria-label="Todas as Crônicas da Tribo">
             <div className={styles.streamSectionTitleRow}>
               <h2 className={styles.streamSectionTitle}>
-                <span className={styles.streamRune}>᚛ ⚡ ᚜</span>
+                <span className={styles.streamRune}>🔥</span>
                 <span>
                   {selectedCategory === "Todas"
-                    ? "Crônicas & Frequências Ativas"
+                    ? "Artigos & Crônicas Sagradas"
                     : `Trilha Sagrada: ${selectedCategory}`}
                 </span>
               </h2>
@@ -255,8 +255,21 @@ export default function OrigemEFaiscaBlog() {
             )}
           </section>
 
-          {/* Coluna Lateral (Sidebar): Busca, Categorias e Trilha Sonora Spotify */}
+          {/* Coluna Lateral (Sidebar): Trilha Sonora Spotify no topo, Busca e Categorias */}
           <aside className={styles.blogSidebar} aria-label="Navegação Lateral e Frequências">
+            {/* Player Spotify Direto (Sem caixa/card envolvente, nativo e limpo) */}
+            <div className={styles.spotifyDirectContainer}>
+              <iframe
+                style={{ borderRadius: "16px", border: "0" }}
+                src="https://open.spotify.com/embed/playlist/4qeaKqhIuYmksMBacX3Dfk?utm_source=generator&theme=0"
+                width="100%"
+                height="352"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title="Playlist Oficial iTech Festival no Spotify"
+              />
+            </div>
+
             {/* Widget de Pesquisa */}
             <div className={styles.sidebarWidget}>
               <h3 className={styles.sidebarWidgetTitle}>
@@ -310,37 +323,7 @@ export default function OrigemEFaiscaBlog() {
                 })}
               </div>
             </div>
-
-            {/* Widget de Trilha Sonora / Spotify Playlist */}
-            <div className={styles.sidebarWidget}>
-              <h3 className={styles.sidebarWidgetTitle}>
-                <span className={styles.sidebarWidgetRune}>🎵</span>
-                <span>Trilha Sonora Oficial</span>
-              </h3>
-              <div className={styles.spotifyPlayerWrapper}>
-                <iframe
-                  style={{ borderRadius: "16px", border: "0" }}
-                  src="https://open.spotify.com/embed/playlist/4qeaKqhIuYmksMBacX3Dfk?utm_source=generator&theme=0"
-                  width="100%"
-                  height="352"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                  title="Playlist Oficial iTech Festival no Spotify"
-                />
-              </div>
-            </div>
           </aside>
-        </div>
-
-        {/* ==================== RODAPÉ DO BLOG / ACESSO DO REDATOR ==================== */}
-        <div className={styles.adminAccessBar}>
-          <span className={styles.adminAccessText}>
-            ⚡ A Origem e a Faísca • Portal Editorial Cósmico iTech 2027
-          </span>
-          <Link href="/blog123/login" className={styles.adminAccessLink}>
-            <span>🔒</span>
-            <span>Área do Redator / Publicar Matéria</span>
-          </Link>
         </div>
       </div>
     </main>
