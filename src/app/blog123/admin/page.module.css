@@ -622,6 +622,54 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
+/* Caixa de Seleção Post em Destaque */
+.featuredToggleBox {
+  background: rgba(249, 115, 22, 0.08);
+  border: 1px solid rgba(249, 115, 22, 0.35);
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
+  margin-top: 0.5rem;
+  transition: all 0.25s ease;
+}
+
+.featuredToggleBox:hover {
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.55);
+}
+
+.featuredCheckboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.featuredCheckboxInput {
+  width: 20px;
+  height: 20px;
+  accent-color: #f97316;
+  margin-top: 0.2rem;
+  cursor: pointer;
+}
+
+.featuredCheckboxInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.featuredCheckboxTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.featuredCheckboxSub {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
 .modalFooter {
   padding: 1.5rem 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);

@@ -24,6 +24,8 @@ export default function OrigemEFaiscaBlog() {
     return () => window.removeEventListener("storage", updatePosts);
   }, []);
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   // Filtragem combinada
   const filteredPosts = useMemo(() => {
     return allPosts.filter((post) => {
@@ -43,21 +45,48 @@ export default function OrigemEFaiscaBlog() {
     });
   }, [allPosts, selectedCategory, searchQuery]);
 
-  // Post em destaque: o marcado como featured
-  const featuredPost = useMemo(() => {
-    if (selectedCategory === "Todas" && searchQuery.trim() === "") {
-      return allPosts.find((p) => p.featured) || allPosts[0];
+  // Posts em destaque para o Carrossel do Topo (até 3 matérias)
+  const featuredPosts = useMemo(() => {
+    if (selectedCategory !== "Todas" || searchQuery.trim() !== "") {
+      return [];
     }
-    return null;
+    const marked = allPosts.filter((p) => p.featured);
+    if (marked.length > 0) {
+      return marked.slice(0, 3);
+    }
+    // Fallback: se nenhum estiver marcado como featured, pega o primeiro
+    return allPosts.slice(0, 1);
   }, [allPosts, selectedCategory, searchQuery]);
 
-  // Grid posts: exclui o featured quando na visão inicial padrão
+  // Troca automática de slides a cada 6 segundos
+  useEffect(() => {
+    if (featuredPosts.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % featuredPosts.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [featuredPosts.length]);
+
+  const nextSlide = () => {
+    if (featuredPosts.length <= 1) return;
+    setCurrentSlide((prev) => (prev + 1) % featuredPosts.length);
+  };
+
+  const prevSlide = () => {
+    if (featuredPosts.length <= 1) return;
+    setCurrentSlide((prev) => (prev - 1 + featuredPosts.length) % featuredPosts.length);
+  };
+
+  const currentFeatured = featuredPosts[currentSlide] || featuredPosts[0];
+
+  // Grid posts: exclui os posts que já estão no carrossel de destaques
   const gridPosts = useMemo(() => {
-    if (featuredPost) {
-      return filteredPosts.filter((p) => p.id !== featuredPost.id);
+    if (featuredPosts.length > 0) {
+      const featuredIds = new Set(featuredPosts.map((p) => p.id));
+      return filteredPosts.filter((p) => !featuredIds.has(p.id));
     }
     return filteredPosts;
-  }, [filteredPosts, featuredPost]);
+  }, [filteredPosts, featuredPosts]);
 
   const getCategoryCount = (categoryName: BlogCategory) => {
     if (categoryName === "Todas") return allPosts.length;
@@ -92,68 +121,116 @@ export default function OrigemEFaiscaBlog() {
           <h1 className={styles.oracleTitle}>A Origem & a Faísca</h1>
 
           <p className={styles.oracleSubtitle}>
-            Notícias, cronogramas, cultura trance e os bastidores do iTech Festival
+            Notícias, cronogramas, cultura trance e os bastidores da iTech Festival
           </p>
         </div>
       </section>
 
       {/* ==================== CORPO PRINCIPAL ==================== */}
       <div className={styles.contentWrapper}>
-        {/* ==================== ARTIGO MONUMENTAL EM DESTAQUE (TOPO) ==================== */}
-        {featuredPost && (
-          <section className={styles.featuredMonumentalSection} aria-label="Chama Principal em Destaque">
-            <Link
-              href={`/blog123/${featuredPost.slug}`}
-              className={styles.monumentalCard}
-              aria-label={`Ver conteúdo: ${featuredPost.title}`}
-            >
-              <div className={styles.monumentalImageWrapper}>
-                <Image
-                  src={featuredPost.coverImage}
-                  alt={featuredPost.coverImageAlt}
-                  fill
-                  priority
-                  className={styles.monumentalImage}
-                  sizes="(max-width: 992px) 100vw, 55vw"
-                />
-                <div className={styles.monumentalImageGlow} />
-              </div>
-
-              <div className={styles.monumentalContent}>
-                <div className={styles.monumentalBadgeRow}>
-                  <span className={styles.monumentalFlameBadge}>🔥 Chama Monumental</span>
-                  <span className={styles.monumentalCategory}>{featuredPost.category}</span>
-                  <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>⏱ {featuredPost.readTime}</span>
-                </div>
-
-                <h2 className={styles.monumentalTitle}>{featuredPost.title}</h2>
-
-                <p className={styles.monumentalExcerpt}>{featuredPost.excerpt}</p>
-
-                <div className={styles.monumentalAuthorRow}>
-                  <div className={styles.monumentalAuthor}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={featuredPost.author.avatar || "/face.png"}
-                      alt={featuredPost.author.name}
-                      className={styles.monumentalAuthorAvatar}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = "/face.png";
-                      }}
+        {/* ==================== CARROSSEL DE ARTIGOS EM DESTAQUE (TOPO - ATÉ 3 MATÉRIAS) ==================== */}
+        {featuredPosts.length > 0 && (
+          <section className={styles.featuredMonumentalSection} aria-label="Carrossel de Chamas em Destaque">
+            <div className={styles.carouselContainer}>
+              {currentFeatured && (
+                <Link
+                  key={currentFeatured.id}
+                  href={`/blog123/${currentFeatured.slug}`}
+                  className={styles.monumentalCard}
+                  aria-label={`Ver conteúdo: ${currentFeatured.title}`}
+                >
+                  <div className={styles.monumentalImageWrapper}>
+                    <Image
+                      src={currentFeatured.coverImage}
+                      alt={currentFeatured.coverImageAlt}
+                      fill
+                      priority
+                      className={styles.monumentalImage}
+                      sizes="(max-width: 992px) 100vw, 55vw"
                     />
-                    <div>
-                      <div className={styles.monumentalAuthorName}>{featuredPost.author.name}</div>
-                      <div className={styles.monumentalAuthorRole}>{featuredPost.author.role}</div>
-                    </div>
+                    <div className={styles.monumentalImageGlow} />
                   </div>
 
-                  <span className={styles.portalActionBtn}>
-                    <span>Ver Conteúdo</span>
-                    <span aria-hidden="true">→</span>
-                  </span>
-                </div>
-              </div>
-            </Link>
+                  <div className={styles.monumentalContent}>
+                    <div className={styles.monumentalBadgeRow}>
+                      <span className={styles.monumentalFlameBadge}>🔥 Destaque Especial</span>
+                      <span className={styles.monumentalCategory}>{currentFeatured.category}</span>
+                      <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>⏱ {currentFeatured.readTime}</span>
+                    </div>
+
+                    <h2 className={styles.monumentalTitle}>{currentFeatured.title}</h2>
+
+                    <p className={styles.monumentalExcerpt}>{currentFeatured.excerpt}</p>
+
+                    <div className={styles.monumentalAuthorRow}>
+                      <div className={styles.monumentalAuthor}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={currentFeatured.author.avatar || "/face.png"}
+                          alt={currentFeatured.author.name}
+                          className={styles.monumentalAuthorAvatar}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "/face.png";
+                          }}
+                        />
+                        <div>
+                          <div className={styles.monumentalAuthorName}>{currentFeatured.author.name}</div>
+                          <div className={styles.monumentalAuthorRole}>{currentFeatured.author.role}</div>
+                        </div>
+                      </div>
+
+                      <span className={styles.portalActionBtn}>
+                        <span>Ver Conteúdo</span>
+                        <span aria-hidden="true">→</span>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              )}
+
+              {/* Controles do Carrossel (caso haja mais de 1 destaque) */}
+              {featuredPosts.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      prevSlide();
+                    }}
+                    className={`${styles.carouselArrowBtn} ${styles.carouselArrowLeft}`}
+                    aria-label="Destaque anterior"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      nextSlide();
+                    }}
+                    className={`${styles.carouselArrowBtn} ${styles.carouselArrowRight}`}
+                    aria-label="Próximo destaque"
+                  >
+                    ›
+                  </button>
+
+                  <div className={styles.carouselIndicators}>
+                    {featuredPosts.map((post, idx) => (
+                      <button
+                        key={post.id}
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setCurrentSlide(idx);
+                        }}
+                        className={`${styles.carouselDot} ${currentSlide === idx ? styles.carouselDotActive : ""}`}
+                        aria-label={`Ir para destaque ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </section>
         )}
 

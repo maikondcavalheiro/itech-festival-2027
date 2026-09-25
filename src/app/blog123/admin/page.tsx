@@ -645,6 +645,40 @@ export default function BlogAdminDashboard() {
                 />
               </div>
 
+              {/* Opção de Post em Destaque no Carrossel Principal (Máx 3) */}
+              <div className={styles.featuredToggleBox}>
+                <label className={styles.featuredCheckboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={isFeatured}
+                    onChange={(e) => {
+                      const checked = e.target.checked;
+                      if (checked) {
+                        const currentFeaturedCount = posts.filter(
+                          (p) => p.featured && p.id !== editingPostId
+                        ).length;
+                        if (currentFeaturedCount >= 3) {
+                          alert(
+                            "Já existem 3 posts marcados como destaque no carrossel. Desmarque outro post antes para adicionar este."
+                          );
+                          return;
+                        }
+                      }
+                      setIsFeatured(checked);
+                    }}
+                    className={styles.featuredCheckboxInput}
+                  />
+                  <div className={styles.featuredCheckboxInfo}>
+                    <span className={styles.featuredCheckboxTitle}>
+                      🔥 Fixar no Carrossel de Destaques do Topo
+                    </span>
+                    <span className={styles.featuredCheckboxSub}>
+                      Aparecerá com visual monumental e troca automática no topo do blog (máximo de 3 matérias).
+                    </span>
+                  </div>
+                </label>
+              </div>
+
               <div className={styles.modalFooter}>
                 <button
                   type="button"
