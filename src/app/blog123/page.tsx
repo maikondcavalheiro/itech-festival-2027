@@ -13,8 +13,15 @@ export default function OrigemEFaiscaBlog() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    const loaded = getStoredPosts();
-    setAllPosts(loaded.filter((p) => (p.status || "published") === "published"));
+    // Sincroniza posts armazenados no cliente
+    const updatePosts = () => {
+      const loaded = getStoredPosts();
+      setAllPosts(loaded.filter((p) => (p.status || "published") === "published"));
+    };
+
+    updatePosts();
+    window.addEventListener("storage", updatePosts);
+    return () => window.removeEventListener("storage", updatePosts);
   }, []);
 
   // Filtragem combinada
