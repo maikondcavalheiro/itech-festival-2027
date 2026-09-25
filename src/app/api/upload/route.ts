@@ -28,21 +28,34 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Captura título sugerido para SEO
+    const postTitle = (formData.get("title") as string | null) || "";
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Sanitiza nome do arquivo
+    // Sanitiza nome do arquivo focado em SEO
     const originalName = file.name || "imagem.jpg";
-    const ext = path.extname(originalName) || ".jpg";
-    const baseName = path
-      .basename(originalName, ext)
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)+/g, "");
+    const ext = path.extname(originalName).toLowerCase() || ".jpg";
 
-    const finalFileName = `${baseName || "capa"}-${Date.now()}${ext}`;
+    let seoSlug = "";
+    if (postTitle.trim()) {
+      seoSlug = postTitle
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "")
+        .slice(0, 60);
+    }
+
+    // Se houver slug do título, inclui prefixo 'itech-festival' para máximo ranqueamento
+    // Se não houver, usa palavras-chave padrão do festival
+    const baseSlug = seoSlug 
+      ? `itech-festival-${seoSlug}` 
+      : "itech-festival-musica-eletronica-guarapuava";
+
+    const finalFileName = `${baseSlug}-${Date.now()}${ext}`;
 
     const uploadDir = path.join(process.cwd(), "public", "blog");
     await mkdir(uploadDir, { recursive: true });

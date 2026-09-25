@@ -144,10 +144,12 @@ export default function BlogAdminDashboard() {
         reader.readAsDataURL(file);
       });
 
-      setUploadMessage("Enviando para o servidor...");
+      setUploadMessage("Enviando e otimizando imagem para SEO...");
       const formData = new FormData();
-      const sanitizedName = file.name.replace(/\.[^/.]+$/, "") + ".jpg";
-      formData.append("file", compressedBlob, sanitizedName);
+      formData.append("file", compressedBlob, "upload.jpg");
+      if (title.trim()) {
+        formData.append("title", title.trim());
+      }
 
       const res = await fetch("/api/upload", {
         method: "POST",
@@ -246,7 +248,7 @@ export default function BlogAdminDashboard() {
       category,
       categorySlug: categorySlugMap[category],
       coverImage,
-      coverImageAlt: title,
+      coverImageAlt: `${title} | iTech Festival Guarapuava`,
       youtubeUrl,
       content,
       tags: selectedTags,
