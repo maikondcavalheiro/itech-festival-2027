@@ -65,153 +65,72 @@ export const BLOG_CATEGORIES: { name: BlogCategory; slug: string; icon: string; 
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    id: "fogo-primordial-2027",
-    slug: "o-despertar-do-fogo-primordial",
-    title: "O Despertar do Fogo Primordial: Por que 2027 marca o retorno às nossas origens",
-    subtitle: "Antes dos lasers e sintetizadores, havia a fogueira sob as estrelas. O manifesto que define a próxima era da iTech.",
-    excerpt: "Em um mundo saturado pelo hiper-digital sem alma, a iTech 2027 evoca o tambor ancestral. Uma investigação sobre a necessidade humana de dança coletiva em torno da chama sagrada e como a tecnologia pode ser um portal, não uma gaiola.",
-    content: `Em um mundo saturado pelo hiper-digital sem alma, a iTech 2027 evoca o tambor ancestral. Uma investigação sobre a necessidade humana de dança coletiva em torno da chama sagrada e como a tecnologia pode ser um portal, não uma gaiola.
+    id: "itech-2026-materializacao",
+    slug: "itech-2026-a-materializacao-de-uma-experiencia-absoluta",
+    title: "ITECH 2026: A Materialização de uma Experiência Absoluta",
+    subtitle: "A ITECH não é apenas um festival; é um manifesto vivo, provando que a arte e a técnica, quando unidas com um propósito maior, são capazes de criar verdadeiras revoluções sociais.",
+    excerpt: "A ITECH não é apenas um festival; é um manifesto vivo, provando que a arte e a técnica, quando unidas com um propósito maior, são capazes de criar verdadeiras revoluções sociais.",
+    content: `Em um cenário onde grandes festivais apostam na saturação para impressionar, a iTech trilhou o caminho inverso. Elegendo como essência o rigor estético, a precisão cenográfica e uma relação de cumplicidade genuína com o seu público, o evento se consolidou não apenas como referência de entretenimento e música eletrônica alternativa, mas como uma potência de vanguarda cultural.
 
-A experiência da pista não é apenas um evento: é uma cerimônia moderna. Quando os graves sincronizam com o compasso cardíaco de milhares de pessoas sob o céu noturno de Guarapuava, algo primal é reativado.
+O Solo Sagrado de Guarapuava: Terra Peregrina de Evolução
 
-Preparem seus corpos e mentes. Em 2027, não apenas celebramos a música eletrônica, celebramos a união de tribos que acreditam na liberdade, no respeito à natureza e na transcendência da arte sonora.`,
+Muito além de cifras, esse sucesso tem nome e chão: o Camping Terra da Lua, cenário perfeito para uma imersão profunda na floresta nativa de Guarapuava. Cercada de montanhas, vertentes de água pura e o frescor inconfundível do planalto paranaense, o espaço foi abraçado pela organização como um santuário de coexistência. Tornou-se um verdadeiro ponto de convivência onde a ancestralidade da mata e a tecnologia dialogaram em uníssono, com o público respeitando cada palmo de natureza e demonstrando um nível de maturidade e consciência ecológica raro de se ver em eventos de grande porte. A energia do vale reverbera a cada batida, tornando a comunhão entre o público e a música um ritual vivo.
+
+Palco Autoral: Onde a Escultura Encontra a Engenharia
+
+O encanto superior materializou um diálogo impecável entre técnicas ancestrais e novas linguagens. Toda a concepção cenográfica ostentou uma obra monumental de bioarquitetura esculpida à mão, garantindo densidade orgânica incomparável com seus entalhes complexos e iluminação em sintonia. Ao mesmo tempo, sua precisão visual foi conduzida pelo renomado Palco X, provando que o festival se recusa a seguir padrões e cria sua própria cartilha de design sensorial.
+
+Com o som que esteve sob o comando do mestre das frequências, o lendário engenheiro de áudio Bob, que projetou um ecossistema sonoro através do sistema de ponta Lambda Labs. O resultado foi uma cobertura impecável, com frequências límpidas do sub-grave aos agudos mais cristalinos. A precisão e a potência da estrutura sonora não apenas surpreenderam os amantes de música eletrônica, como também criaram a base técnica perfeita para acomodar as narrativas dos maiores produtores da cena.
+
+Alta Performance: Coesão Sonora Sem Concessões
+
+A curadoria sonora desenhou uma jornada magistral, conectando vertentes rítmicas e orgânicas sem oscilar. Do psytrance progressivo de alta voltagem à pulsação densa e contínua do techno, cada set manteve uma narrativa precisa, com sequências sublimes do coletivo Nômade Sounds. Foi uma entrega de fidelidade sonora que permitiu a todos entrarem em comunhão de pulsação e estados ampliados de consciência através da música.
+
+Vocais envolventes e compassos profundos ecoaram sob o dossel das araucárias. Artistas como Rica Amaral, Mandragora, Burn in Noise, Element, Harmonika e Becker compuseram a trilha sonora desta jornada inesquecível, transformando o vale num caleidoscópio de frequências que ecoarão para sempre na memória de cada participante.
+
+A Nova Referência: A Comunidade Que Transforma a Cena
+
+Mais importante do que qualquer estrutura física é a identidade dos presentes: um público vibrante, composto por apreciadores e apaixonados de música eletrônica e artes alternativas que compreendem o verdadeiro significado da palavra comunidade. A reverência mútua, a empatia genuína e a busca por autoconhecimento transformaram o solo em um verdadeiro santuário onde a segurança e o respeito imperaram em todos os cantos.
+
+A atmosfera transcendental foi enriquecida por intervenções artísticas ao vivo, apresentações teatrais itinerantes do Grupo Vagamundo e performances visuais guiadas por videomapping que fundiam símbolos arcanos com arquitetura futurista. Uma experiência de três dias de duração que extrapolou a música para se tornar um catalisador de transformações existenciais.
+
+Um Segundo de Silêncio e uma Vida de Celebração
+
+O encerramento do festival nos premiou com o amanhecer inesquecível, sob a regência do mestre Rica Amaral e a energia de Bob no comando de som. Naquele instante em que o sol rasgou o nevoeiro e beijou as copas centenárias, o tempo parou. Uma catarse compartilhada e lágrimas de pura alegria uniram todos em um único coro de vibração positiva.
+
+Para aqueles que viveram a edição 2026, a certeza é única: a iTech ultrapassou o conceito tradicional de evento para consagrar-se como um divisor de águas na cultura de festivais independentes do Brasil. O legado está construído e o convite ecoa para as futuras gerações: quem pisa nesta terra sai transformado.
+
+A Gratidão de Quem Viveu o Momento
+
+À organização, voluntários e a cada alma que uniu sua frequência à nossa: o festival se curvou em reverência à dedicação e ao espírito de fraternidade que conduziram cada momento. Cada detalhe, do cuidado impecável com a limpeza e estrutura ao respeito com os ecossistemas, refletiu uma operação que colocou o amor pela arte no centro de cada decisão.
+
+Nos encontramos nos próximos capítulos, onde novos caminhos se abrirão e a mesma chama continuará a queimar em cada batimento dos nossos corações.
+
+Viva a música viva, respeite a terra, celebre com a sua tribo.`,
     category: "Notícias",
     categorySlug: "noticias",
-    readTime: "6 min de leitura",
-    publishedAt: "2026-09-15",
-    dateDisplay: "15 de Setembro de 2026",
+    readTime: "7 min de leitura",
+    publishedAt: "2026-09-25",
+    dateDisplay: "25 de Setembro de 2026",
     featured: true,
     author: {
-      name: "Guardião da Chama",
-      role: "Conselho Editorial iTech",
+      name: "Conselho Editorial iTech",
+      role: "Curadoria Oficial",
       avatar: "/face.png",
     },
-    tags: ["Manifesto", "Ancestralidade", "iTech 2027", "Notícias"],
-    coverImage: "/blog/fogo-primordial.jpg",
-    coverImageAlt: "Fogueira ancestral e feixes de laser cruzando o céu noturno em um festival místico",
-  },
-  {
-    id: "terra-da-lua-santuario",
-    slug: "terra-da-lua-o-santuario-onde-a-gravidade-muda",
-    title: "Terra da Lua: O santuário onde a gravidade se transforma em dança",
-    subtitle: "Entre as montanhas de Guarapuava, um solo ancestral preparado para receber milhares de almas em harmonia.",
-    excerpt: "Conheça os segredos geográficos e energéticos do Camping Terra da Lua. Água pura de nascente, florestas nativas e a acústica natural que amplifica cada batimento cardíaco da nossa pista.",
-    content: `Conheça os segredos geográficos e energéticos do Camping Terra da Lua. Água pura de nascente, florestas nativas e a acústica natural que amplifica cada batimento cardíaco da nossa pista.
-
-Com áreas amplas de sombra, fontes de água natural e banheiros higienizados estrategicamente posicionados, nossa estrutura foi planejada para permitir que você se preocupe apenas em viver o momento presente.
-
-Lembre-se de trazer lonas reforçadas, calçados adequados para terreno de montanha e respeito absoluto ao ecossistema local. A terra nos acolhe e nós a protegemos.`,
-    category: "Camping & Estrutura",
-    categorySlug: "camping-estrutura",
-    readTime: "4 min de leitura",
-    publishedAt: "2026-09-08",
-    dateDisplay: "08 de Setembro de 2026",
-    author: {
-      name: "Raissa Lua",
-      role: "Guardiã Ambiental da Terra da Lua",
-      avatar: "/face-colorida.png",
-    },
-    tags: ["Camping Terra da Lua", "Ecologia", "Guarapuava", "Estrutura"],
-    coverImage: "/blog/terra-da-lua.jpg",
-    coverImageAlt: "Vista aérea mágica do vale do Camping Terra da Lua sob a luz da lua e névoa bioluminescente",
-  },
-  {
-    id: "sintetizadores-e-tambores",
-    slug: "sintetizadores-e-tambores-a-ciencia-do-transe",
-    title: "Sintetizadores e Tambores: A ciência rítmica que reprograma a consciência",
-    subtitle: "Como ondas senoidais puras e polirritmias primitivas ativam os mesmos estados meditativos dos rituais milenares.",
-    excerpt: "Exploramos a física acústica do Psytrance e do Techno Orgânico. Do bpm calibrado para sincronizar ondas cerebrais Theta às baixas frequências que ressoam na caixa torácica como trovões primordiais.",
-    content: `Exploramos a física acústica do Psytrance e do Techno Orgânico. Do bpm calibrado para sincronizar ondas cerebrais Theta às baixas frequências que ressoam na caixa torácica como trovões primordiais.
-
-Nossos curadores sonoros selecionaram sistemas de som de alta definição (Funktion-One / Lambda Labs) calibrados milimetricamente para o vale, garantindo nitidez cristalina desde os 30Hz até os agudos mais aéreos.
-
-Uma viagem que atravessará do Twilight ao Full On, do Forest ao Darkprog, mantendo a vibração contínua durante todo o ciclo solar e lunar.`,
-    category: "Música & Line-up",
-    categorySlug: "musica-lineup",
-    readTime: "7 min de leitura",
-    publishedAt: "2026-08-28",
-    dateDisplay: "28 de Agosto de 2026",
-    author: {
-      name: "Alquimista Sonoro",
-      role: "Curador Musical iTech",
-      avatar: "/face.png",
-    },
-    tags: ["Música Eletrônica", "Frequências", "Psytrance", "Line-up"],
-    coverImage: "/blog/sintetizadores-tambores.jpg",
-    coverImageAlt: "Módulos de sintetizadores analógicos envoltos em raízes de árvores e chamas mágicas",
-  },
-  {
-    id: "arte-visionaria-geometria",
-    slug: "arte-visionaria-e-geometria-sagrada-decodificando-os-portais",
-    title: "Arte Visionária e Geometria Sagrada: Decodificando os portais visuais da iTech",
-    subtitle: "Cenografias biomecânicas inspiradas em fósseis, fractais de plantas e circuitos de silício.",
-    excerpt: "Cada estrutura cenográfica do festival é um glifo projetado com proporções áureas. Descubra os artistas visuais que estão esculpindo o palco principal e as instalações interativas de 2027.",
-    content: `Cada estrutura cenográfica do festival é um glifo projetado com proporções áureas. Descubra os artistas visuais que estão esculpindo o palco principal e as instalações interativas de 2027.
-
-Com iluminação mapeada em 3D, esculturas monumentais de madeira de reflorestamento e tecidos fluorescentes pintados à mão, o espaço físico se transforma em uma galeria viva a céu aberto.`,
-    category: "Arte & Cultura",
-    categorySlug: "arte-cultura",
-    readTime: "5 min de leitura",
-    publishedAt: "2026-08-14",
-    dateDisplay: "14 de Agosto de 2026",
-    author: {
-      name: "Ícaro Fractal",
-      role: "Diretor de Arte Visionária",
-      avatar: "/face-colorida.png",
-    },
-    tags: ["Arte Visionária", "Cenografia", "Geometria Sagrada", "Cultura"],
-    coverImage: "/blog/arte-visionaria.jpg",
-    coverImageAlt: "Portal monumental de geometria sagrada com runas fluorescentes e iluminação psicodélica",
-  },
-  {
-    id: "guia-do-peregrino-da-mata",
-    slug: "guia-do-peregrino-como-se-preparar-para-3-dias-de-imersao",
-    title: "Guia do Peregrino da Mata: Como se preparar para 3 dias de imersão total",
-    subtitle: "Do kit de sobrevivência mística à hidratação consciente: tudo o que você precisa saber antes de pisar na pista.",
-    excerpt: "Montar acampamento com sabedoria, escolher calçados que respeitem a terra, gerenciar a energia do corpo durante as transições de dia e noite e cuidar da nossa tribo coletiva.",
-    content: `Montar acampamento com sabedoria, escolher calçados que respeitem a terra, gerenciar a energia do corpo durante as transições de dia e noite e cuidar da nossa tribo coletiva.
-
-Checklist essencial:
-- Barraca impermeável com sobreteto completo
-- Isolante térmico e saco de dormir resistente ao frio noturno de altitude
-- Garrafa de água reutilizável (não vendemos copos descartáveis)
-- Protetor solar biodegradável e agasalhos para a noite
-- Sacolas de lixo para manter seu acampamento 100% limpo`,
-    category: "Camping & Estrutura",
-    categorySlug: "camping-estrutura",
-    readTime: "8 min de leitura",
-    publishedAt: "2026-07-30",
-    dateDisplay: "30 de Julho de 2026",
-    author: {
-      name: "Tribo Guardiã",
-      role: "Comunidade iTech",
-      avatar: "/face.png",
-    },
-    tags: ["Guia Prático", "Dicas de Camping", "Sobrevivência", "Camping"],
-    coverImage: "/blog/guia-peregrino.jpg",
-    coverImageAlt: "Acampamento iluminado por lanternas orgânicas e céu estrelado sob a mata atlântica",
-  },
-  {
-    id: "iluminacao-biomecanica",
-    slug: "a-centelha-tecnologica-iluminacao-biomecanica-e-o-futuro",
-    title: "A Centelha Tecnológica: Iluminação biomecânica e o futuro das artes imersivas",
-    subtitle: "Como os lasers inteligentes reagem ao movimento coletivo do público através de sensores de campo.",
-    excerpt: "Pela primeira vez na história da iTech, a iluminação do festival respirará em uníssono com a pulsação do público. Entenda como a engenharia óptica de ponta cria a ilusão de matéria viva no ar.",
-    content: `Pela primeira vez na história da iTech, a iluminação do festival respirará em uníssono com a pulsação do público. Entenda como a engenharia óptica de ponta cria a ilusão de matéria viva no ar.
-
-Os operadores de iluminação e lasers trabalharão em tempo real junto aos DJs, sincronizando cada queda e transição harmônica com leques volumétricos que abraçam a pista de ponta a ponta.`,
-    category: "Música & Line-up",
-    categorySlug: "musica-lineup",
-    readTime: "5 min de leitura",
-    publishedAt: "2026-07-12",
-    dateDisplay: "12 de Julho de 2026",
-    author: {
-      name: "Eng. Solaris",
-      role: "Desenvolvedor de Luz & Laser",
-      avatar: "/face-colorida.png",
-    },
-    tags: ["Tecnologia de Luz", "Lasers", "Inovação", "Line-up"],
-    coverImage: "/blog/iluminacao-biomecanica.jpg",
-    coverImageAlt: "Feixes de luz laser e projeções holográficas orgânicas se fundindo com copas de árvores ancestrais",
+    tags: [
+      "iTech 2026",
+      "Terra da Lua",
+      "Guarapuava",
+      "Música Eletrônica",
+      "Psytrance",
+      "Manifesto",
+      "Cultura Psicodélica",
+      "Lambda Labs",
+      "Arte Visionária"
+    ],
+    coverImage: "/blog/itech-festival-musica-eletronica-guarapuava-1790315489843.jpg",
+    coverImageAlt: "Público vibrando e cenografia monumental psicodélica da ITECH",
   },
 ];
+

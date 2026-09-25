@@ -2,7 +2,7 @@
 
 import { BlogPost, BLOG_POSTS, BlogCategory } from "@/data/blogPosts";
 
-const STORAGE_KEY = "itech_blog_posts_v1";
+const STORAGE_KEY = "itech_blog_posts_v2";
 const AUTH_KEY = "itech_blog_admin_session";
 
 // Helpers para SEO e utilitários
