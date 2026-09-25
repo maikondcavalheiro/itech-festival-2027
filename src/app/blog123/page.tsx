@@ -161,7 +161,11 @@ export default function OrigemEFaiscaBlog() {
         {/* ==================== ARTIGO MONUMENTAL EM DESTAQUE ==================== */}
         {featuredPost && (
           <section className={styles.featuredMonumentalSection} aria-label="Chama Principal em Destaque">
-            <article className={styles.monumentalCard}>
+            <Link
+              href={`/blog123/${featuredPost.slug}`}
+              className={styles.monumentalCard}
+              aria-label={`Ver conteúdo: ${featuredPost.title}`}
+            >
               <div className={styles.monumentalImageWrapper}>
                 <Image
                   src={featuredPost.coverImage}
@@ -202,16 +206,13 @@ export default function OrigemEFaiscaBlog() {
                     </div>
                   </div>
 
-                  <Link
-                    href={`/blog123/${featuredPost.slug}`}
-                    className={styles.portalActionBtn}
-                  >
-                    <span>Entrar no Portal</span>
+                  <span className={styles.portalActionBtn}>
+                    <span>Ver Conteúdo</span>
                     <span aria-hidden="true">→</span>
-                  </Link>
+                  </span>
                 </div>
               </div>
-            </article>
+            </Link>
           </section>
         )}
 
@@ -231,68 +232,62 @@ export default function OrigemEFaiscaBlog() {
           {gridPosts.length > 0 ? (
             <div className={styles.crystalTotemGrid}>
               {gridPosts.map((post) => (
-                <article key={post.id} className={styles.crystalTotemCard}>
-                  <div className={styles.totemImageWrapper}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={post.coverImage || "/blog/fogo-primordial.jpg"}
-                      alt={post.coverImageAlt || post.title}
-                      className={styles.totemImage}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = "/blog/fogo-primordial.jpg";
-                      }}
-                    />
-                    <div className={styles.totemCategoryBadge}>{post.category}</div>
-                  </div>
-
-                  <div className={styles.totemBody}>
-                    <div className={styles.totemMetaRow}>
-                      <span>{post.dateDisplay}</span>
-                      <span>⏱ {post.readTime}</span>
-                      {post.youtubeUrl && (
-                        <span className={styles.videoNeonBadge}>▶ Vídeo</span>
-                      )}
+                <Link
+                  key={post.id}
+                  href={`/blog123/${post.slug}`}
+                  className={styles.crystalTotemCard}
+                  aria-label={`Ver conteúdo: ${post.title}`}
+                >
+                  <article className={styles.totemArticleInner}>
+                    <div className={styles.totemImageWrapper}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={post.coverImage || "/blog/fogo-primordial.jpg"}
+                        alt={post.coverImageAlt || post.title}
+                        className={styles.totemImage}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/blog/fogo-primordial.jpg";
+                        }}
+                      />
+                      <div className={styles.totemCategoryBadge}>{post.category}</div>
                     </div>
 
-                    <h3 className={styles.totemTitle}>{post.title}</h3>
-
-                    <p className={styles.totemExcerpt}>{post.excerpt}</p>
-
-                    {post.tags && post.tags.length > 0 && (
-                      <div className={styles.totemTags}>
-                        {post.tags.map((tag) => (
-                          <span key={tag} className={styles.totemTagPill}>
-                            #{tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className={styles.totemFooter}>
-                      <div className={styles.totemAuthor}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={post.author.avatar || "/face.png"}
-                          alt={post.author.name}
-                          className={styles.totemAuthorAvatar}
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/face.png";
-                          }}
-                        />
-                        <span className={styles.totemAuthorName}>{post.author.name}</span>
+                    <div className={styles.totemBody}>
+                      <div className={styles.totemMetaRow}>
+                        <span>{post.dateDisplay}</span>
+                        <span>⏱ {post.readTime}</span>
+                        {post.youtubeUrl && (
+                          <span className={styles.videoNeonBadge}>▶ Vídeo</span>
+                        )}
                       </div>
 
-                      <Link
-                        href={`/blog123/${post.slug}`}
-                        className={styles.totemExploreLink}
-                      >
-                        <span>Explorar</span>
-                        <span aria-hidden="true">→</span>
-                      </Link>
+                      <h3 className={styles.totemTitle}>{post.title}</h3>
+
+                      <p className={styles.totemExcerpt}>{post.excerpt}</p>
+
+                      <div className={styles.totemFooter}>
+                        <div className={styles.totemAuthor}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={post.author.avatar || "/face.png"}
+                            alt={post.author.name}
+                            className={styles.totemAuthorAvatar}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "/face.png";
+                            }}
+                          />
+                          <span className={styles.totemAuthorName}>{post.author.name}</span>
+                        </div>
+
+                        <span className={styles.totemExploreLink}>
+                          <span>Ver Conteúdo</span>
+                          <span aria-hidden="true">→</span>
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                </Link>
               ))}
             </div>
           ) : (
